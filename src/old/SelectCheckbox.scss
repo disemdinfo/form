@@ -1,0 +1,48 @@
+.SelectCheckbox{
+    padding: 0 !important;
+  
+    .md-icon-text{
+      padding-right: 10px !important;
+     font-size: 17px ;
+    } 
+    .md-btn--flat{
+      background-color: #90caf9;
+      padding: 3px;
+      margin-bottom: 8px !important;
+     
+   }
+   .md-btn--hover{
+    background-color: #1976d2;
+  }
+  
+  
+  }
+  .SelectCheckbox-hidden-label{
+    display: none;
+  }
+  .SelectCheckbox span.md-icon-text{
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .SelectCheckbox-list{
+    z-index: 13;
+    
+  }
+  .SelectCheckBox-button{
+    .md-icon-text{
+     padding-right: 4px !important;
+     padding-left: 4px !important;
+     font-size: 14px !important;
+     color: white !important;
+    } 
+    .md-icon{
+      color: white !important;
+      padding-left: 2px;
+        
+   }
+    
+  }
+  
+  
