@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardTitle, CardText, Grid, Cell, TextField } from 'react-md';
 import CurrencyInput from 'react-currency-input';
 import ButtonTemp from 'react-md/lib/Buttons/Button';
-import InputText from './InputText';
+import Text from './Text';
 
 const defaultStyle = {
   form: {
@@ -64,7 +64,7 @@ export const FormCell = ({ children, ...props }) => (
   </Cell>
 );
 
-const InputContainer = ({ children, style }) => (
+const Container = ({ children, style }) => (
   <div style={{ ...defaultStyle.input.container, ...style }}>
     {children}
   </div >
@@ -77,7 +77,7 @@ const InputLabel = ({ children, id }) => (
 );
 
 export const Input = ({ id, value, onChange, onBlur, label, style, ...props }) => (
-  <InputContainer style={style}>
+  <Container style={style}>
     {/* <InputLabel id={id}>{label}</InputLabel> */}
     <TextField
       id={id}
@@ -89,11 +89,11 @@ export const Input = ({ id, value, onChange, onBlur, label, style, ...props }) =
       // style={defaultStyle.input}
       {...props}
     />
-  </InputContainer>
+  </Container>
 );
 
 export const InputInteger = ({ id, onChange, onBlur, value, label, style, ...props }) => (
-  <InputContainer style={style}>
+  <Container style={style}>
     <InputLabel id={id}>{label}</InputLabel>
     <CurrencyInput
       id={id}
@@ -106,10 +106,10 @@ export const InputInteger = ({ id, onChange, onBlur, value, label, style, ...pro
       thousandSeparator="."
       {...props}
     />
-  </InputContainer>
+  </Container>
 );
 
-export const InputDecimal = ({ ...props }) => (
+export const Number = ({ ...props }) => (
   <InputInteger
     precision={2}
     decimalSeparator=","
@@ -147,7 +147,7 @@ const Form = ({ children, style, title, subtitle, ...props }) => (
 Form.defaultProps = {
 };
 
-Form.InputText = InputText;
+Form.Text = Text;
 
 export default Form;
-export { InputText };
+export { Text };

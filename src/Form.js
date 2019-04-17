@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import InputText from './InputText';
-import InputDecimal from './InputDecimal';
+import Container from './Container'
+import Text from './Text';
+import Number from './Number';
 
 class Form extends Component {
 
@@ -58,19 +59,21 @@ class Form extends Component {
       <form
         {...props}
       >
-        {children.map(c =>  React.cloneElement(c, { 
+        {children}
+        {/* {children.map(c =>  React.cloneElement(c, { 
+          // ...c,
           key: c.props.id,  
           onChange: this.onChange, 
-          value: data[c.props.id],
-        }))}
+          // value: data[c.props.id],          
+        }))} */}
         <button id="submit" onClick={this.onSubmit}>Submit</button>
       </form>
     );
   }
 }
 
-Form.InputText = InputText;
-Form.InputDecimal = InputDecimal;
+Form.Text = Text;
+Form.Number = Number;
 
 export default Form;
-export { InputText, InputDecimal };
+export { Text, Number };

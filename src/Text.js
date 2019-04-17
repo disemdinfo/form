@@ -1,17 +1,17 @@
 import React from 'react';
-import InputContainer from './InputContainer'
-const InputText = ({ label, value, onChange, ...props }) => {
+import Container from './Container'
+const Text = ({ label, value, onChange, ...props }) => {
 
   return(
-    <InputContainer label={label}>
+    <Container label={label}>
       <input 
         value={value || ''} 
         onChange={e => onChange({ id: e.target.id, value: e.target.value, e })}        
         {...props}        
       />
-    </InputContainer>
+    </Container>
   )
 
 }
 
-export default InputText;
+export default Text;

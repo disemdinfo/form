@@ -17,7 +17,7 @@ const Label = ({ children, id }) => (
   </div>
 );
 
-const InputContainer = ({ children, id, label, style }) => (
+const Container = ({ children, id, label, style }) => (
   <div style={{ ...defaultStyle, ...style }}>
     <Label id={id}>{label}</Label>
     {children}
@@ -25,7 +25,7 @@ const InputContainer = ({ children, id, label, style }) => (
 );
 
 
-InputContainer.defaultProps = {
+Container.defaultProps = {
 };
 
-export default InputContainer;
+export default Container;

@@ -1,8 +1,9 @@
-.Input-container {
-  background: red;
+.Input-container {  
   display: flex;
+  flex-direction: column;
+  margin: 20px
 }
 
-.Input-container input {
+/* .Input-container input {
   background: blue;
-}
+} */

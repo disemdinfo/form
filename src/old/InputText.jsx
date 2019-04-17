@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextField } from 'react-md';
-import InputContainer from './InputContainer';
+import Container from './Container';
 
 const defaultStyle = {
 
@@ -22,8 +22,8 @@ const defaultStyle = {
 };
 
 
-export const InputText = ({ id, value, onChange, onBlur, label, style, ...props }) => (
-  <InputContainer style={style}>
+export const Text = ({ id, value, onChange, onBlur, label, style, ...props }) => (
+  <Container style={style}>
     {/* <InputLabel id={id}>{label}</InputLabel> */}
     <TextField
       id={id}
@@ -35,11 +35,11 @@ export const InputText = ({ id, value, onChange, onBlur, label, style, ...props 
       // style={defaultStyle}
       {...props}
     />
-  </InputContainer>
+  </Container>
 );
 
 
-InputText.defaultProps = {
+Text.defaultProps = {
 };
 
-export default InputText;
+export default Text;
