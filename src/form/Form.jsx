@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Container from './Container'
-import Text from './Text';
-import Number from './Number';
+import TextInput from './TextInput';
+import NumberInput from './NumberInput';
 
 class Form extends Component {
 
@@ -72,8 +72,8 @@ class Form extends Component {
   }
 }
 
-Form.Text = Text;
-Form.Number = Number;
+Form.TextInput = Text;
+Form.NumberInput = Number;
 
 export default Form;
-export { Text, Number };
+export { TextInput, NumberInput };

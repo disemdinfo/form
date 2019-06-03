@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import Form, { Text, Number } from './Form';
+import Form from './form/Form.jsx';
+import TextInput from './form/TextInput.jsx';
+import NumberInput from './form/NumberInput.jsx';
 
 class App extends Component {
 
@@ -7,36 +9,39 @@ class App extends Component {
     super(props)
 
     this.state = {
-      value: ['lime']
+      data: {}
     }
 
     this.onChange = this.onChange.bind(this)
   }
 
-  onChange(e){
-    console.log(e.target.value)
-    this.setState({ value: e.target.value })
+  // onChange({ value, id }){
+  //   console.log(id, value)
+  //   this.setState(({ data }) => ({ data: { ...data, [id]: value } }));
+  // }
+
+  onChange({ id, value }){  
+    console.log('4', id, value)
+    this.setState(({ data }) => ({ data: { ...data, [id]: value } }));
   }
   render() {
     return (
-      <Form 
-        data={{ texto: 'teste' }}
-      >
-        <Text
-          id="texto"
+      <div>
+        <TextInput
+          id="text"
           label="texto" 
           required          
-          // onChange={({ id, value}) => console.log(id, value)}
+          value={this.state.data.text} 
+          onChange={e => this.onChange({ id: e.target.id, value: e.target.value })}
         />
-        <Number
+        {/* <NumberInput
           id="decimal"
           label="Decimal" 
-          // value={this.state.value}
-          onChangeEvent={this.onChange}
-          // onChange={({ id, value}) => console.log(id, value)}
-        />
+          value={this.state.data.number}          
+          onChange={this.onChange}
+        /> */}
 
-      </Form>     
+      </div>     
     );
   }
 }
