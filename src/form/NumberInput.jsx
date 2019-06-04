@@ -3,30 +3,33 @@ import PropTypes from 'prop-types';
 import Container from './Container'
 import CurrencyInput from 'react-currency-input';
 
-
-const NumberInput = ({ onChange, value, allowNegative, ...props }) => (
-  <Container       
-      {...props}
-      Component={() => 
-        <CurrencyInput          
-          value={(value || '').toString().replace('.', ',')}
-          onChangeEvent={(e) => {            
-            onChange({ id: e.target.id, value: Number(e.target.value.toString().replace(/\./g, '').replace(',', '.').replace('%', '').replace('R$', '')) });
-          }}
-          allowNegative={allowNegative}    
-        />
-      }
-    /> 
+const NumberInput = props => (
+  <Container {...props} > 
+    {({ onChange, value, prefix, suffix, ...inputProps }) => 
+      <CurrencyInput 
+        {...inputProps}        
+        value={value.toString().replace('.', ',')}
+        prefix={prefix}
+        suffix={suffix}
+        onChangeEvent={e => onChange({ e, id: e.target.id, value: Number(e.target.value.replace(/\./g, '').replace(',', '.').replace(prefix, '').replace(suffix, '')) })}        
+        className="input"
+      />      
+    }
+    </Container>
   );
 
 NumberInput.propTypes = {
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired,
-  allowNegative: PropTypes.bool,
+  value: PropTypes.number,  
 };
 
 NumberInput.defaultProps = {
-  allowNegative: true,
+  value: undefined,
+  decimalSeparator: ",",
+  thousandSeparator: ".",
+  precision: 2,
+  prefix: undefined,
+  suffix: undefined
 };
 
 export default NumberInput;

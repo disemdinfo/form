@@ -1,18 +1,16 @@
 import React from 'react';
 import Container from './Container'
 
-// {/* {...props} */}
-const TextInput = ({ ...props }) => {  
-  
+const TextInput = props => {    
   return(
-    <Container
-      {...props}       
-      Component={e => {
-        console.log('3', e)        
-        return <input {...e}/>
-      }}
-    />      
+    <Container {...props} >   
+    {({ onChange, ...inputProps}) => 
+    <input 
+      {...inputProps}
+      onChange={e => onChange({ e, id: e.target.id, value: e.target.value })}
+      className="input"
+    />}
+    </Container>   
   )
 }
-
 export default TextInput;

@@ -1,32 +1,22 @@
 import React from 'react';
-import './Form.css';
+import './Input.css';
 
-const Label = ({ children, htmlFor, ...props }) => (
-  <label htmlFor={htmlFor}>{children}</label>
+const Label = ({ children, htmlFor, required, ...props }) => (
+  <label htmlFor={htmlFor} className="label">{children} {required ? '*' : null}</label>
 );
 
-const Container = ({ Component, label, id, value, onChange, ...props }) => {  
-  console.log('2', id)
+const Container = ({ children, label, id, value, required, ...props }) => {
+  console.log('container', props)
   return(
     <div className="input-container">
-      <Label htmlFor={id}>{label}</Label>
-        <Component 
-        id={id} 
-        onChange={onChange}
-        //onChange={e => {
-        //  e.preventDefault();          
-        //  onChange();
-        //}} 
-        {...props}/>
+      <Label htmlFor={id} required={required}>{label}</Label>
+        {children({
+          id,
+          value: value || '',          
+          ...props
+        })}
     </div>
   )
 }
 
 export default Container;
-
-// {<Component 
-//           id={id}
-//           value={value || ''}
-//           onChange={e => onChange({ id: e.target.id, value: e.target.value, e })}
-//           {...props}
-//         />} 

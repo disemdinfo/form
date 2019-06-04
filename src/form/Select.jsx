@@ -1,41 +1,44 @@
-import React from 'react';
-import './Input.scss';
+import React, { PureComponent } from 'react';
+import Container from './Container'
+import Select from "react-virtualized-select";
+import "react-select/dist/react-select.css";
+import "react-virtualized-select/styles.css";
 
-const Select = ({ options, value, id, onChange, style, ...props }) => (
-  <select
-    {...props}
-    style={{
-      textAlignLast: 'right',
-      background: '#FFFFFF',
-      ...style,
-    }}
-    className="input"
-    onChange={e => onChange({ id, value: e.target.value })}
-  >
-    <option value={null} />
-    {options.map((option) => {
-      let optionValue = null;
-      let label = null;
-      let selected = null;
-      if (typeof option === 'object') {
-        optionValue = option.optionValue;
-        label = option.label;
-      } else {
-        optionValue = option;
-        label = option;
-      }
-      if (optionValue == value) selected = true;
-      return (
-        <option value={optionValue} selected={selected}>{label}</option>
-      )
-      ;
-    })}
-  </select>
-)
-  ;
+class SelectCheckbox extends PureComponent {
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            values: props.value || []
+        };
+    }
 
-Select.defaultProps = {
-  options: [],
+    render(){
+
+        const { values } = this.state;
+
+        return (
+            <Container {...this.props} > 
+                {({ options, onChange, id, ...inputProps }) => 
+                <Select 
+                    {...inputProps}                    
+                    searchable
+                    value={values}                    
+                    options={options}
+                    ignoreAccents                    
+                    onChange={value => this.setState({ values: value }, () => onChange({ id, value: this.state.values }))}                    
+                    // optionRenderer={Option}                    
+                    clearAllText="Remover todos"
+                    searchPromptText="Digite o que procura"
+                    noResultsText="Nenhum resultado encontrado."                    
+                />}
+            </Container>)
+    }
 };
 
-export default Select;
+SelectCheckbox.defaultProps = {
+  options: [],
+  multi: false
+};
+
+export default SelectCheckbox;
