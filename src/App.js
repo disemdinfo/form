@@ -12,6 +12,7 @@ class App extends Component {
 
     this.state = {
       data: {
+        // number: null
         // select: 1,
         // selectCheckbox: [2]
       }
@@ -21,34 +22,48 @@ class App extends Component {
   }
 
   onChange({ id, value }){    
-    this.setState(({ data }) => ({ data: { ...data, [id]: value } }));
+    this.setState(({ data }) => ({ data: { ...data, [id]: value } }), () => console.log(this.state.data));
+    // this.setState(({ data }) => ({ data: { ...data, [id]: value } }));
   }
 
   render() {
+    const { date, text, number, select, selectCheckbox } = this.state.data;
+
     return (
-      <Form>
+      <Form 
+        style={{ width: '50%' }}
+        actions={
+          [{
+            label: 'Voltar',
+            onClick: () => console.log('voltar'),
+            disabled: !text
+          }]
+        }>
 
         <DateInput
           id="date"
           label="Date" 
           required         
-          value={this.state.data.date} 
+          value={date} 
           onChange={this.onChange}
-          min="2019-05-15"
+          // isValidDate={current => current < new Date('2019-06-20')}
+          min={new Date('2019-06-20')}
+          max={new Date('2019-06-25')}
         />
 
         <TextInput
-          id="texto"
+          id="text"
           label="Texto" 
           required 
           maxLength={5}         
-          value={this.state.data.texto} 
+          value={text} 
           onChange={this.onChange}
+          error={() => number > 5 ? 'Number tem que ser menor que 5' : null}
         />
         <NumberInput
           id="number"
           label="Number" 
-          value={this.state.data.number}          
+          value={number}          
           onChange={this.onChange}
           prefix='R$ '
           suffix=" %"
@@ -58,7 +73,7 @@ class App extends Component {
         <Select
           id="select"
           label="Select" 
-          value={this.state.data.select}          
+          value={select}          
           onChange={this.onChange}
           required
           options={[
@@ -80,7 +95,7 @@ class App extends Component {
           id="selectCheckbox"
           label="Select Checkbox" 
           multi
-          value={this.state.data.selectCheckbox}          
+          value={selectCheckbox}          
           onChange={this.onChange}
           required
           options={[

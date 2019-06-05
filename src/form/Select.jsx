@@ -9,12 +9,12 @@ class SelectCheckbox extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            values: props.value || []
+            values: props.value,
         };
     }
 
     render(){
-
+        const { multi } = this.props;
         const { values } = this.state;
 
         return (
@@ -26,7 +26,7 @@ class SelectCheckbox extends PureComponent {
                     value={values}                    
                     options={options}
                     ignoreAccents                    
-                    onChange={value => this.setState({ values: value }, () => onChange({ id, value: this.state.values }))}                    
+                    onChange={item => this.setState({ values: multi ? item.map(i => i.value) : item.value }, () => onChange({ id, value: this.state.values }))}                    
                     // optionRenderer={Option}                    
                     clearAllText="Remover todos"
                     searchPromptText="Digite o que procura"

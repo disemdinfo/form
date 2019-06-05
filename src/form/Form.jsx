@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import TextInput from './TextInput';
-import NumberInput from './NumberInput';
+import './Form.css';
+import Button from './Button.jsx';
 
-
-function getError({ id, value, required, min, max }){
+function getError({ id, value, error, required, min, max }){
   
   if(required && value !== 0){
     const text = 'Campo obrigatório.';
@@ -22,6 +21,9 @@ function getError({ id, value, required, min, max }){
     if(value > max) return `Máximo ${max}.`;  
   }
 
+  if(error){
+    return error()
+  }
 
   return null;
 }
@@ -39,31 +41,32 @@ function getChildren(children){
 class Form extends Component {
 
   constructor(props){
-    super(props)
+    super(props)   
 
-    const { children } = props;
+    this.state = {};
+  }
 
-    this.state = {      
-      children      
-    }
-  }  
-
-  
-
-  render() {   
+  render() {
+    const { onSubimit, actions } = this.props;
     const children = getChildren(this.props.children);
-
+    const isValid = children.every(c => !c.props.error);
+    
     return (
-      <div>
-        {children}     
-        <button id="submit" onClick={this.onSubmit}>Submit</button>
+      <div className="container" {...this.props}>
+        <div className="form">
+          {children}          
+        </div>
+        <div className="actions">
+          <Button label="Salvar" disabled={!isValid} onClick={onSubimit} />
+          {actions.map((action, key) => <Button key={key} {...action} />)}
+        </div>
       </div>
     );
   }
 }
 
-Form.TextInput = Text;
-Form.NumberInput = Number;
+Form.defaultProps = {
+  actions: []
+}
 
 export default Form;
-export { TextInput, NumberInput };
