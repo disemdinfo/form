@@ -2,6 +2,40 @@ import React, { Component } from 'react';
 import TextInput from './TextInput';
 import NumberInput from './NumberInput';
 
+
+function getError({ id, value, required, min, max }){
+  
+  if(required && value !== 0){
+    const text = 'Campo obrigatório.';
+    if(Array.isArray(value)){
+      if(!value.length) return text;     
+    } else {
+      if(!value) return text;
+    }   
+  }
+
+  if(min){
+    if(value < min) return `Mínimo ${min}.`;  
+  }
+
+  if(max){
+    if(value > max) return `Máximo ${max}.`;  
+  }
+
+
+  return null;
+}
+
+function getChildren(children){
+  return children.map(c => ({
+    ...c,
+    props: { 
+      ...c.props, 
+      error: getError(c.props) 
+    }      
+  }));
+}
+
 class Form extends Component {
 
   constructor(props){
@@ -12,19 +46,13 @@ class Form extends Component {
     this.state = {      
       children      
     }
-  }
+  }  
 
-  getChildrens(children){
-    return children.map(c => ({
-      ...c,
-      props: { ...c.props, error: 'true' }      
-    }));
-  }
+  
 
-  render() {
-    // const { children, ...props } = this.props;    
-    const children = this.getChildrens(this.props.children);
-    console.log('children', children)
+  render() {   
+    const children = getChildren(this.props.children);
+
     return (
       <div>
         {children}     

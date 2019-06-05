@@ -3,6 +3,7 @@ import Form from './form/Form.jsx';
 import TextInput from './form/TextInput.jsx';
 import NumberInput from './form/NumberInput.jsx';
 import Select from './form/Select.jsx';
+import DateInput from './form/DateInput.jsx';
 
 class App extends Component {
 
@@ -11,24 +12,36 @@ class App extends Component {
 
     this.state = {
       data: {
-        select: 1,
-        selectCheckbox: [2]
+        // select: 1,
+        // selectCheckbox: [2]
       }
     }
 
     this.onChange = this.onChange.bind(this)
   }
 
-  onChange({ id, value }){      
+  onChange({ id, value }){    
     this.setState(({ data }) => ({ data: { ...data, [id]: value } }));
   }
+
   render() {
     return (
       <Form>
+
+        <DateInput
+          id="date"
+          label="Date" 
+          required         
+          value={this.state.data.date} 
+          onChange={this.onChange}
+          min="2019-05-15"
+        />
+
         <TextInput
           id="texto"
           label="Texto" 
-          //required          
+          required 
+          maxLength={5}         
           value={this.state.data.texto} 
           onChange={this.onChange}
         />
@@ -39,12 +52,15 @@ class App extends Component {
           onChange={this.onChange}
           prefix='R$ '
           suffix=" %"
+          max={10}
+          required
         />
         <Select
           id="select"
           label="Select" 
           value={this.state.data.select}          
           onChange={this.onChange}
+          required
           options={[
             {
               value: 1,
@@ -66,6 +82,7 @@ class App extends Component {
           multi
           value={this.state.data.selectCheckbox}          
           onChange={this.onChange}
+          required
           options={[
             {
               value: 1,
@@ -81,6 +98,8 @@ class App extends Component {
             }
           ]}
         />
+
+        
 
       </Form>     
     );
