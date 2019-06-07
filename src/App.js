@@ -22,7 +22,7 @@ class App extends Component {
   }
 
   onChange({ id, value }){    
-    this.setState(({ data }) => ({ data: { ...data, [id]: value } }), () => console.log(this.state.data));
+    this.setState(({ data }) => ({ data: { ...data, [id]: value } }));
     // this.setState(({ data }) => ({ data: { ...data, [id]: value } }));
   }
 
@@ -32,6 +32,7 @@ class App extends Component {
     return (
       <Form 
         style={{ width: '50%' }}
+        onSubimit={data => console.log(this.state.data)}
         actions={
           [{
             label: 'Voltar',
@@ -55,7 +56,7 @@ class App extends Component {
           id="text"
           label="Texto" 
           required 
-          maxLength={5}         
+          maxLength={50}         
           value={text} 
           onChange={this.onChange}
           error={() => number > 5 ? 'Number tem que ser menor que 5' : null}

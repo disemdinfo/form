@@ -28,7 +28,7 @@ function getError({ id, value, error, required, min, max }){
   return null;
 }
 
-function getChildren(children){
+function getErrors(children){
   return children.map(c => ({
     ...c,
     props: { 
@@ -41,15 +41,38 @@ function getChildren(children){
 class Form extends Component {
 
   constructor(props){
-    super(props)   
+    super(props)
+    
+    const { children } = props;
 
-    this.state = {};
+    this.state = {
+      children,
+    };
+
+    this.onSubimit = this.onSubimit.bind(this);
+  }
+
+  componentWillReceiveProps({ children }){
+    if(children !== this.props.children){      
+     this.setState({ children: this.state.submited ? getErrors(children) : children });
+    }
+  }
+
+  onSubimit(){
+
+    const children = getErrors(this.props.children);
+    const isValid = children.every(c => !c.props.error);
+
+    if(isValid){
+      this.props.onSubimit();
+    } else {
+      this.setState({ children, submited: true });
+    }
   }
 
   render() {
-    const { onSubimit, actions } = this.props;
-    const children = getChildren(this.props.children);
-    const isValid = children.every(c => !c.props.error);
+    const { actions } = this.props;
+    const { children } = this.state;    
     
     return (
       <div className="container" {...this.props}>
@@ -57,7 +80,7 @@ class Form extends Component {
           {children}          
         </div>
         <div className="actions">
-          <Button label="Salvar" disabled={!isValid} onClick={onSubimit} />
+          <Button label="Salvar" onClick={this.onSubimit} />
           {actions.map((action, key) => <Button key={key} {...action} />)}
         </div>
       </div>
