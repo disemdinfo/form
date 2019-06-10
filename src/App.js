@@ -18,7 +18,7 @@ class App extends Component {
         // select: 1,
         // selectCheckbox: [2],
         text: 'Teste',
-        textarea: 'The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with reduced sight who use screen readers and enables users to click on the text to toggle the switch. If you would only put some text next to the switch but not inside a label element, the screen reader will just read out "switch off" and the user will have no idea what it is for.'
+        textarea: 'The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with reduced sight who use screen readers and enables users to click on the text to toggle the switch. If you would only put some text next to the switch but not inside a label element, the screen reader will just read out "switch off" and the user will have no idea what it is for. The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with reduced sight who use screen readers and enables users to click on the text to toggle the switch. If you would only put some text next to the switch but not inside a label element, the screen reader will just read out "switch off" and the user will have no idea what it is for. The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with'
       }
     }
 
@@ -76,6 +76,7 @@ class App extends Component {
           value={textarea} 
           onChange={this.onChange}
           onBlur={this.onChange}
+          rows={3}
           // error={() => number > 5 ? 'Number tem que ser menor que 5' : null}
         />
 
