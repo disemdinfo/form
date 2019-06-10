@@ -26,8 +26,10 @@ class SelectCheckbox extends PureComponent {
                     value={values}                    
                     options={options}
                     ignoreAccents                    
-                    onChange={item => this.setState({ values: multi ? item.map(i => i.value) : item.value }, () => onChange({ id, value: this.state.values }))}                    
-                    // optionRenderer={Option}                    
+                    onChange={i => {
+                        const item = multi ?  i || [] : i || {};
+                        this.setState({ values: multi ? item.map(i => i.value) : item.value }, () => onChange({ id, value: this.state.values }))}
+                    }                                        
                     clearAllText="Remover todos"
                     searchPromptText="Digite o que procura"
                     noResultsText="Nenhum resultado encontrado."                    

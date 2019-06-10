@@ -71,11 +71,11 @@ class Form extends Component {
   }
 
   render() {
-    const { actions } = this.props;
+    const { actions, onSubimit, ...props } = this.props;
     const { children } = this.state;    
     
     return (
-      <div className="container" {...this.props}>
+      <div className="container" {...props}>
         <div className="form">
           {children}          
         </div>

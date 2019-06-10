@@ -1,25 +1,32 @@
 import React from 'react';
 import Container from './Container'
 
-const TextInput = props => {
+const TextArea = props => {
   const { maxLength, value } = props;
   const info = maxLength ? `${value.length} / ${maxLength}` : null;
   return(
     <Container {...props} info={info} >   
-    {({ onChange, onBlur, ...inputProps}) => 
-    <input 
-      {...inputProps}
+    {({ value, onChange, onBlur, ...inputProps}) => {
+        console.log('value', inputProps)
+    return (
+    <textarea 
+      {...inputProps}      
       onChange={e => onChange({ e, id: e.target.id, value: e.target.value })}
       onBlur={e => onBlur({ e, id: e.target.id, value: e.target.value })}
-      className="input"
-    />}
+      className="input textarea"
+    >
+    {value}
+    </textarea>)}}
     </Container>   
   )
 }
 
-TextInput.defaultProps = {
+TextArea.defaultProps = {
   value: '',
-  onBlur: () => null
+  onBlur: () => null,
+  style: { 
+    minHeight: 72,    
+  }  
 }
 
-export default TextInput;
+export default TextArea;
