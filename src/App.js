@@ -38,7 +38,7 @@ class App extends Component {
       <Form 
         style={{ width: '50%' }}
         isValid={isValid => this.setState({ isValid }, () => console.log('isValid', isValid))}
-        onSubimit={data => console.log(this.state.data)}
+        onSubmit={data => console.log(this.state.data)}
         actions={
           [{
             label: 'Voltar',

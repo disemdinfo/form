@@ -59,9 +59,11 @@ class Form extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  component
+
   componentWillReceiveProps(nextProps) {
     const { submited } = this.state;
-
+    
     if (nextProps.children !== this.props.children) {
       const children = getErrors(nextProps.children, submited);
       this.setState({ children }, () => {
@@ -73,7 +75,7 @@ class Form extends Component {
     }
   }
 
-  onSubmit() {
+  onSubmit() {    
     this.setState({ children: getErrors(this.props.children, true), submited: true }, () => {
       if (this.state.isValid) {
         this.props.onSubmit()
