@@ -28,14 +28,22 @@ function getError({ id, value, error, required, min, max }) {
   return null;
 }
 
-function getErrors(children) {
-  return children.map(c => ({
-    ...c,
-    props: {
-      ...c.props,
-      error: getError(c.props),
-    },
-  }));
+function getErrors(children, submited) {
+  return children.map((c) => {
+    const error = getError(c.props);
+    return ({
+      ...c,
+      props: {
+        ...c.props,
+        isValid: !error,
+        error: submited ? getError(c.props) : null,
+      },
+    });
+  });
+}
+
+function isValidForm(children) {
+  return children.every(c => !c.props.isValid);
 }
 
 class Form extends Component {
@@ -51,16 +59,27 @@ class Form extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillReceiveProps({ children }) {
-    if (children !== this.props.children) {
-      this.setState({ children: this.state.submited ? getErrors(children) : children });
+  componentWillReceiveProps(nextProps) {
+    const { submited } = this.state;
+
+    if (nextProps.children !== this.props.children) {
+      const children = getErrors(nextProps.children, submited);
+      this.setState({ children }, () => {
+        const isValid = isValidForm(children);
+        if (isValid !== this.state.isValid) {
+          this.setState({ isValid }, () => this.props.isValid(isValid));
+        }
+      });
     }
   }
 
   onSubmit() {
-    const children = getErrors(this.props.children);
-    const isValid = children.every(c => !c.props.error);
-    this.setState({ children, submited: true }, () => this.props.onSubmit({ isValid }));
+    this.setState({ children: getErrors(this.props.children, true), submited: true }, () => {
+      if (this.state.isValid) {
+        this.props.onSubmit()
+        ;
+      }
+    });
   }
 
   render() {
@@ -87,6 +106,7 @@ Form.propTypes = {
   actions: PropTypes.array,
   width: PropTypes.string,
   style: PropTypes.object,
+  isValid: PropTypes.func,
 };
 
 Form.defaultProps = {
@@ -94,6 +114,7 @@ Form.defaultProps = {
   actions: [],
   width: '100%',
   style: {},
+  isValid: () => false,
 };
 
 export default Form;

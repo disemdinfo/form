@@ -37,6 +37,7 @@ class App extends Component {
     return (
       <Form 
         style={{ width: '50%' }}
+        isValid={isValid => this.setState({ isValid }, () => console.log('isValid', isValid))}
         onSubimit={data => console.log(this.state.data)}
         actions={
           [{
