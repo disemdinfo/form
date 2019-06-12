@@ -43,7 +43,7 @@ function getErrors(children, submited) {
 }
 
 function isValidForm(children) {
-  return children.every(c => !c.props.isValid);
+  return children.every(c => c.props.isValid);
 }
 
 class Form extends Component {
@@ -61,7 +61,7 @@ class Form extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { submited } = this.state;
-    
+
     if (nextProps.children !== this.props.children) {
       const children = getErrors(nextProps.children, submited);
       this.setState({ children }, () => {
@@ -73,7 +73,7 @@ class Form extends Component {
     }
   }
 
-  onSubmit() {    
+  onSubmit() {
     this.setState({ children: getErrors(this.props.children, true), submited: true }, () => {
       if (this.state.isValid) {
         this.props.onSubmit()

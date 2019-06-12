@@ -6,19 +6,15 @@ const TextArea = (props) => {
   const info = maxLength ? `${value.length} / ${maxLength}` : null;
   return (
     <Container {...props} info={info} >
-      {({ value, onChange, onBlur, ...inputProps }) => {
-        
-        return (
-          <textarea
-            {...inputProps}
-            onChange={e => onChange({ e, id: e.target.id, value: e.target.value })}
-            onBlur={e => onBlur({ e, id: e.target.id, value: e.target.value })}
-            className="input"
-            // style={{ ...style, minHeight }}
-            value={value}
-          />)
-        ;
-      }}
+      {({ value, onChange, onBlur, ...inputProps }) => (
+        <textarea
+          {...inputProps}
+          onChange={e => onChange({ e, id: e.target.id, value: e.target.value })}
+          onBlur={e => onBlur({ e, id: e.target.id, value: e.target.value })}
+          className="input"
+          value={value}
+        />)
+      }
     </Container>
   );
 };
@@ -29,8 +25,6 @@ TextArea.defaultProps = {
   rows: 3,
   style: {
     height: 'auto',
-    // paddingTop: 8,
-    // lineHeight: 1.25,
   },
 };
 

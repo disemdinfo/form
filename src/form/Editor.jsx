@@ -124,9 +124,7 @@ class DraftJs extends React.Component {
       <Container {...this.props} >
         {({ style, ...props }) => (
           <div style={style}>
-            {/* <pre>{this.props.value}</pre> */}
             <Editor
-              {...props}
               ref={this.setEditor}
               editorState={this.state.editorState}
               onEditorStateChange={this.onChange}

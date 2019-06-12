@@ -107,12 +107,12 @@ class App extends Component {
           options={Array(10).fill().map((d, i) => ({ value: i, label: i }))}
         />
 
-          <Switch 
-            id="switchInput"
-            label="Switch"           
-            checked={switchInput}          
-            onChange={this.onChange}
-          />
+        <Switch 
+          id="switchInput"
+          label="Switch"           
+          checked={switchInput}          
+          onChange={this.onChange}
+        />
         
 
       </Form>     
