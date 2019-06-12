@@ -59,8 +59,6 @@ class Form extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  component
-
   componentWillReceiveProps(nextProps) {
     const { submited } = this.state;
     

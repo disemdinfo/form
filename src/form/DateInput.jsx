@@ -5,15 +5,15 @@ import 'react-datetime/css/react-datetime.css';
 
 const DateInput = props => (
   <Container {...props} >
-    {({ onChange, id, value, closeOnSelect, timeFormat, isValidDate, min, max, ...inputProps }) =>
+    {({ onChange, id, value, closeOnSelect, timeFormat, isValidDate, minDate, maxDate, ...inputProps }) =>
       (<Datetime
         id={id}
         value={value}
         closeOnSelect={closeOnSelect}
         timeFormat={timeFormat}
         isValidDate={(current) => {
-          const isValidMin = min ? current > min : true;
-          const isValidMax = max ? current <= max : true;
+          const isValidMin = minDate ? current > minDate : true;
+          const isValidMax = maxDate ? current <= maxDate : true;
 
           return isValidDate(current) && isValidMin && isValidMax;
         }}

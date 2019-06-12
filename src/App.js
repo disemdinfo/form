@@ -14,9 +14,11 @@ class App extends Component {
 
     this.state = {
       data: {
-        // number: null
-        // select: 1,
-        // selectCheckbox: [2],
+        date: new Date(),
+        number: 5,
+        select: 1,
+        switchInput: true,
+        selectCheckbox: [2],
         text: 'Teste',
         textarea: 'The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with reduced sight who use screen readers and enables users to click on the text to toggle the switch. If you would only put some text next to the switch but not inside a label element, the screen reader will just read out "switch off" and the user will have no idea what it is for. The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with reduced sight who use screen readers and enables users to click on the text to toggle the switch. If you would only put some text next to the switch but not inside a label element, the screen reader will just read out "switch off" and the user will have no idea what it is for. The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with'
       }
@@ -26,19 +28,17 @@ class App extends Component {
   }
 
   onChange({ id, value }){  
-    console.log(id, value)     
-    this.setState(({ data }) => ({ data: { ...data, [id]: value } }));
-    
+    this.setState(({ data }) => ({ data: { ...data, [id]: value } }));    
   }
 
   render() {
-    const { date, text, textarea, number, select, selectCheckbox } = this.state.data;
+    const { date, text, textarea, number, select, selectCheckbox, switchInput } = this.state.data;
 
     return (
       <Form 
-        style={{ width: '50%' }}
+        width='50%'
         isValid={isValid => this.setState({ isValid }, () => console.log('isValid', isValid))}
-        onSubmit={data => console.log(this.state.data)}
+        onSubmit={data => console.log('submit', this.state.data)}
         actions={
           [{
             label: 'Voltar',
@@ -54,8 +54,8 @@ class App extends Component {
           value={date} 
           onChange={this.onChange}
           // isValidDate={current => current < new Date('2019-06-20')}
-          min={new Date('2019-06-20')}
-          max={new Date('2019-06-25')}
+          minDate={new Date('2019-06-20')}
+          maxDate={new Date('2019-06-25')}
         />
 
         <TextInput
@@ -77,7 +77,7 @@ class App extends Component {
           value={textarea} 
           onChange={this.onChange}
           onBlur={this.onChange}
-          rows={3}
+          // rows={3}
           // error={() => number > 5 ? 'Number tem que ser menor que 5' : null}
         />
 
@@ -108,9 +108,9 @@ class App extends Component {
         />
 
           <Switch 
-            id="selectCheckbox"
+            id="switchInput"
             label="Switch"           
-            value={selectCheckbox}          
+            checked={switchInput}          
             onChange={this.onChange}
           />
         
