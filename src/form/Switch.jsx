@@ -18,6 +18,8 @@ SwitchInput.defaultProps = {
     checked: false,
     checkedIcon: false,
     uncheckedIcon: false,
+    width: 48,
+    height: 24
 }
 
 export default SwitchInput;

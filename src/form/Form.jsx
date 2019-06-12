@@ -83,7 +83,7 @@ class Form extends Component {
   }
 
   render() {
-    const { actions, onSubmit, width, style, ...props } = this.props;
+    const { actions, onSubmit, width, style, isValid, ...props } = this.props;
     const { children } = this.state;
 
     return (
