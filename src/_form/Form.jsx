@@ -30,7 +30,6 @@ function getError({ id, value, error, required, min, max }) {
 
 function getErrors(children, submited) {
   return children.map((c) => {
-    if (Array.isArray(c)) return c;
     const error = getError(c.props);
     return ({
       ...c,
@@ -44,7 +43,7 @@ function getErrors(children, submited) {
 }
 
 function isValidForm(children) {
-  return children.filter(c => !Array.isArray(c)).every(c => c.props.isValid);
+  return children.every(c => c.props.isValid);
 }
 
 class Form extends Component {
@@ -64,9 +63,7 @@ class Form extends Component {
     const { submited } = this.state;
 
     if (nextProps.children !== this.props.children) {
-      let children = Array.isArray(nextProps.children) ? nextProps.children : [nextProps.children];
-      children = getErrors(children, submited);
-
+      const children = getErrors(nextProps.children, submited);
       this.setState({ children }, () => {
         const isValid = isValidForm(children);
         if (isValid !== this.state.isValid) {
@@ -77,7 +74,7 @@ class Form extends Component {
   }
 
   onSubmit() {
-    this.setState({ children: getErrors(this.state.children, true), submited: true }, () => {
+    this.setState({ children: getErrors(this.props.children, true), submited: true }, () => {
       if (this.state.isValid) {
         this.props.onSubmit()
         ;
