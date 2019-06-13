@@ -7,15 +7,7 @@ import draftToHtml from 'draftjs-to-html';
 import { uploadApi } from '~/lib/api';
 import { ARQUIVO_URL } from '~/lib/constants';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import './Editor.scss';
-
-const styles = {
-  editor: {
-    // border: '1px solid rgba(0, 0, 0, 0.12)',
-    marginTop: 33,
-    // minHeight: '12em',
-  },
-};
+import Container from './Container';
 
 function createMarkup(text) {
   return { __html: text };
@@ -121,25 +113,6 @@ class DraftJs extends React.Component {
     };
   }
 
-  // static getDerivedStateFromProps(props, state) {
-  //   const { value } = props;
-
-  //   //   console.log('state', state.prevValue);
-  //   if (value !== state.prevValue && !state.prevValue) {
-  //     console.log('value', value);
-  //     //   console.log('value', value);
-  //     //   console.log('state', state.prevValue);
-  //     //   const editorState = toEditorState(value);
-  //     //   console.log('editorState', editorState);
-  //     return {
-  //       prevValue: value,
-  //       value,
-  //       // editorState: editorState || state.editorState,
-  //     };
-  //   }
-  //   return null;
-  // }
-
   componentWillReceiveProps({ value }) {
     if (value !== this.props.value && this.state.new) {
       this.setState({ editorState: toEditorState(value), new: false });
@@ -148,19 +121,20 @@ class DraftJs extends React.Component {
 
   render() {
     return (
-      <div style={styles.editor}>
-        {/* <pre>{this.props.value}</pre> */}
-        <Editor
-          ref={this.setEditor}
-          editorState={this.state.editorState}
-          onEditorStateChange={this.onChange}
-          handlePastedText={this.handlePastedText}
-          wrapperClassName="demo-wrapper"
-          editorClassName="demo-editor"
-          toolbar={toolbarOptions}
-          style={{ height: 500 }}
-        />
-      </div>
+      <Container {...this.props} >
+        {({ style, ...props }) => (
+          <div style={style}>
+            <Editor
+              ref={this.setEditor}
+              editorState={this.state.editorState}
+              onEditorStateChange={this.onChange}
+              handlePastedText={this.handlePastedText}
+              toolbar={toolbarOptions}
+            />
+          </div>
+        )}
+
+      </Container>
     );
   }
 }
@@ -172,6 +146,12 @@ DraftJs.propTypes = {
 
 DraftJs.defaultProps = {
   value: null,
+  style: {
+    border: '1px solid rgba(0, 0, 0, 0.12)',
+    borderRadius: 4,
+    background: 'white',
+    minHeight: 300,
+  },
 };
 
 

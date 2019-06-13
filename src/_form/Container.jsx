@@ -5,11 +5,13 @@ const Label = ({ children, htmlFor, ...props }) => (
   <label htmlFor={htmlFor} className="label">{children}</label>
 );
 
-const Container = ({ children, label, id, error, info, styleContainer, validate, ...props }) => (
+const Container = ({ children, label, id, error, info, styleContainer, validate, ...props }) => {
+  console.log('******************', props)
+  return(
   <div style={styleContainer} className="input-container">
     {label && <Label htmlFor={id}>{label}</Label>}
     {children({
-      id,
+      id,      
       ...props,
     })}
     <div className="footer">
@@ -17,14 +19,14 @@ const Container = ({ children, label, id, error, info, styleContainer, validate,
       <small className="info">{info}</small>
     </div>
   </div>
-);
+)};
 
 Container.defaultProps = {
   value: '',
   styleContainer: {
     marginTop: 20,
-    marginBottom: 10,
-  },
+    marginBottom: 10
+  }
 };
 
 export default Container;
