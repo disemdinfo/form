@@ -26,13 +26,25 @@ class SelectCheckbox extends PureComponent {
           value={value}
           options={convertOptions({ options, optionValue, optionLabel })}
           ignoreAccents
-          onChange={(i) => {
-            const item = multi ? i || [] : i || {};
-            onChange({ id, value: multi ? item.map(i => i.value) : item.value });
+          onChange={(nextValue) => {
+            let nextValueFormatted = null;
+            let selected = null;
+            let diff = 0;
+            if (multi) {
+              diff = nextValue.length - value.length;
+              nextValueFormatted = nextValue.map(i => i.value);
+              if (diff < 0) {
+                selected = value.filter(v => !nextValueFormatted.includes(v))[0];
+              } else {
+                selected = nextValueFormatted.filter(v => !value.includes(v))[0];
+              }
+            } else {
+              nextValueFormatted = (nextValue || {}).value;
+            }
+
+            onChange({ id, value: nextValueFormatted, selected, diff });
           }}
-          clearAllText="Remover todos"
-          searchPromptText="Digite o que procura"
-          noResultsText="Nenhum resultado encontrado."
+
         />)}
       </Container>);
   }
@@ -44,6 +56,9 @@ SelectCheckbox.defaultProps = {
   multi: false,
   optionValue: 'value',
   optionLabel: 'label',
+  clearAllText: 'Remover todos',
+  placeholder: 'Digite o que procura',
+  noResultsText: 'Nenhum resultado encontrado.',
 };
 
 export default SelectCheckbox;

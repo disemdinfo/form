@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button.jsx';
-import SnackBar from './SnackBar';
+import SnackBar from './SnackBar.jsx';
 import './Form.css';
 
 function getError({ id, value, error, required, min, max }) {
@@ -78,9 +78,9 @@ class Form extends Component {
   }
 
   onSubmit() {
-    this.setState({ children: getErrors(this.state.children, true), submited: true }, () => {      
+    this.setState({ children: getErrors(this.state.children, true), submited: true }, () => {
       if (this.state.isValid) {
-        this.props.onSubmit({ message: message => this.setState({ message, showMessage: true })});
+        this.props.onSubmit({ message: message => this.setState({ message, showMessage: true }) });
       }
     });
   }
@@ -90,20 +90,20 @@ class Form extends Component {
     const { children, message } = this.state;
 
     return (
-      <div className="container" style={{ width, ...style }} {...props}>        
+      <div className="container" style={{ width, ...style }} {...props}>
         <div className="form">
           {children}
         </div>
         <div className="actions">
           <Button label="Salvar" onClick={onSubmit ? this.onSubmit : null} />
           {actions.map((action, key) => <Button key={key} {...action} />)}
-        </div>        
+        </div>
         <SnackBar
           show={this.state.showMessage}
-          onHide={() => this.setState({ showMessage: false })}          
-        >            
-          <p>{message}</p>
-        </SnackBar>        
+          onHide={() => this.setState({ showMessage: false })}
+        >
+          {message}
+        </SnackBar>
       </div>
     );
   }

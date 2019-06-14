@@ -16,6 +16,10 @@
   padding-right: 10px;
 }
 
+.input-number{
+  text-align: right;
+}
+
 .label {    
   padding-left: 4px;
   padding-bottom: 4px;
