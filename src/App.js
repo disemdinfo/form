@@ -1,129 +1,123 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Button from './Button.jsx';
-import SnackBar from './SnackBar.jsx';
-import './Form.css';
+import Form from './form/Form.jsx';
+import TextInput from './form/TextInput.jsx';
+import NumberInput from './form/NumberInput.jsx';
+import Select from './form/Select.jsx';
+import DateInput from './form/DateInput.jsx';
+import Switch from './form/Switch.jsx';
+import TextArea from './form/TextArea.jsx';
 
-function getError({ id, value, error, required, min, max }) {
-  if (id) {
-    if (required && value !== 0) {
-      const text = 'Campo obrigatório.';
-      if (Array.isArray(value)) {
-        if (!value.length) return text;
-      } else if (!value) return text;
-    }
+class App extends Component {
 
-    if (min) {
-      if (value < min) return `Mínimo ${min}.`;
-    }
-
-    if (max) {
-      if (value > max) return `Máximo ${max}.`;
-    }
-
-    if (error) {
-      return error();
-    }
-  }
-
-  return null;
-}
-
-function getErrors(children, submited) {
-  return children.map((c) => {
-    if (Array.isArray(c)) return c;
-    const error = getError(c.props);
-    return ({
-      ...c,
-      props: {
-        ...c.props,
-        isValid: !error,
-        error: submited ? getError(c.props) : null,
-      },
-    });
-  });
-}
-
-function isValidForm(children) {
-  return children.filter(c => !Array.isArray(c)).every(c => c.props.isValid);
-}
-
-class Form extends Component {
-  constructor(props) {
-    super(props);
-
-    const { children } = props;
+  constructor(props){
+    super(props)
 
     this.state = {
-      children,
-    };
-
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { submited } = this.state;
-
-    if (nextProps.children !== this.props.children) {
-      let children = Array.isArray(nextProps.children) ? nextProps.children : [nextProps.children];
-      children = getErrors(children, submited);
-
-      this.setState({ children }, () => {
-        const isValid = isValidForm(children);
-        if (isValid !== this.state.isValid) {
-          this.setState({ isValid }, () => this.props.isValid(isValid));
-        }
-      });
-    }
-  }
-
-  onSubmit() {
-    this.setState({ children: getErrors(this.state.children, true), submited: true }, () => {
-      if (this.state.isValid) {
-        this.props.onSubmit({ message: message => this.setState({ message, showMessage: true }) });
+      data: {
+        date: new Date(),
+        number: 5,
+        select: 1,
+        switchInput: true,
+        selectCheckbox: [2],
+        text: 'Teste',
+        textarea: 'The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with reduced sight who use screen readers and enables users to click on the text to toggle the switch. If you would only put some text next to the switch but not inside a label element, the screen reader will just read out "switch off" and the user will have no idea what it is for. The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with reduced sight who use screen readers and enables users to click on the text to toggle the switch. If you would only put some text next to the switch but not inside a label element, the screen reader will just read out "switch off" and the user will have no idea what it is for. The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with'
       }
-    });
+    }
+
+    this.onChange = this.onChange.bind(this)
+  }
+
+  onChange({ id, value }){  
+    this.setState(({ data }) => ({ data: { ...data, [id]: value } }));    
   }
 
   render() {
-    const { actions, onSubmit, width, style, isValid, ...props } = this.props;
-    const { children, message } = this.state;
+    const { date, text, textarea, number, select, selectCheckbox, switchInput } = this.state.data;
 
     return (
-      <div className="container" style={{ width, ...style }} {...props}>
-        <div className="form">
-          {children}
-        </div>
-        <div className="actions">
-          <Button label="Salvar" onClick={onSubmit ? this.onSubmit : null} />
-          {actions.map((action, key) => <Button key={key} {...action} />)}
-        </div>
-        <SnackBar
-          show={this.state.showMessage}
-          onHide={() => this.setState({ showMessage: false })}
-        >
-          {message}
-        </SnackBar>
-      </div>
+      <Form 
+        width='50%'
+        isValid={isValid => this.setState({ isValid }, () => console.log('isValid', isValid))}
+        onSubmit={data => console.log('submit', this.state.data)}
+        actions={
+          [{
+            label: 'Voltar',
+            onClick: () => console.log('voltar'),
+            disabled: !text
+          }]
+        }>
+
+        <DateInput
+          id="date"
+          label="Date" 
+          required         
+          value={date} 
+          onChange={this.onChange}
+          // isValidDate={current => current < new Date('2019-06-20')}
+          minDate={new Date('2019-06-20')}
+          maxDate={new Date('2019-06-25')}
+        />
+
+        <TextInput
+          id="text"
+          label="Texto" 
+          required 
+          maxLength={50}         
+          value={text} 
+          onChange={this.onChange}
+          onBlur={this.onChange}
+          error={() => number > 5 ? 'Number tem que ser menor que 5' : null}
+        />
+
+        <TextArea
+          id="textarea"
+          label="Text Area" 
+          required 
+          // maxLength={100}         
+          value={textarea} 
+          onChange={this.onChange}
+          onBlur={this.onChange}
+          // rows={3}
+          // error={() => number > 5 ? 'Number tem que ser menor que 5' : null}
+        />
+
+        <NumberInput
+          id="number"
+          label="Number" 
+          value={number}          
+          onChange={this.onChange}  
+          max={10}
+          required
+        />
+        <Select
+          id="select"
+          label="Select" 
+          value={select}          
+          onChange={this.onChange}
+          required
+          options={Array(100).fill().map((d, i) => ({ value: i, label: i }))}
+        />
+        <Select
+          id="selectCheckbox"
+          label="Select Checkbox" 
+          multi
+          value={selectCheckbox}          
+          onChange={this.onChange}
+          required
+          options={Array(10).fill().map((d, i) => ({ value: i, label: i }))}
+        />
+
+        <Switch 
+          id="switchInput"
+          label="Switch"           
+          checked={switchInput}          
+          onChange={this.onChange}
+        />
+        
+
+      </Form>     
     );
   }
 }
 
-Form.propTypes = {
-  children: PropTypes.node.isRequired,
-  onSubmit: PropTypes.func,
-  actions: PropTypes.array,
-  width: PropTypes.string,
-  style: PropTypes.object,
-  isValid: PropTypes.func,
-};
-
-Form.defaultProps = {
-  onSubmit: null,
-  actions: [],
-  width: '100%',
-  style: {},
-  isValid: () => false,
-};
-
-export default Form;
+export default App;
