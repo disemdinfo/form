@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from './Button.jsx';
+import Button from './Button';
 import SnackBar from './SnackBar.jsx';
 import './Form.css';
 
