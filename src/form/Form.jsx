@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './Form.css';
 import Button from './Button.jsx';
+import SnackBar from './SnackBar';
+import './Form.css';
 
 function getError({ id, value, error, required, min, max }) {
   if (id) {
@@ -79,7 +80,7 @@ class Form extends Component {
   onSubmit() {
     this.setState({ children: getErrors(this.state.children, true), submited: true }, () => {      
       if (this.state.isValid) {
-        this.props.onSubmit({ message: message => this.setState({ message })});
+        this.props.onSubmit({ message: message => this.setState({ message, showMessage: true })});
       }
     });
   }
@@ -96,8 +97,14 @@ class Form extends Component {
         <div className="actions">
           <Button label="Salvar" onClick={onSubmit ? this.onSubmit : null} />
           {actions.map((action, key) => <Button key={key} {...action} />)}
-        </div>
-        <div className="message">{message}</div>
+        </div>        
+        <SnackBar
+          show={this.state.showMessage}
+          onHide={() => this.setState({ showMessage: false })}
+          timer={20000}
+        >            
+          <p>{message}</p>
+        </SnackBar>        
       </div>
     );
   }

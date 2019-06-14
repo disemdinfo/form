@@ -3,10 +3,6 @@
     margin-right: auto;
 }
 
-.form {      
-    
-}
-
 .actions {
     margin-top: 24px
 }
@@ -25,4 +21,12 @@
 .button-disabled{
     background-color: #ccc;  
     cursor: auto !important;    
+}
+
+.message {  
+    background: red
+}
+
+.snackbar{
+    font-size: 20
 }

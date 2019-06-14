@@ -39,7 +39,7 @@ class App extends Component {
         width='50%'
         isValid={isValid => this.setState({ isValid }, () => console.log('isValid', isValid))}
         onSubmit={({ message }) => {
-          message('salvou')
+          message('Salvou...')
         }}
         actions={
           [{
