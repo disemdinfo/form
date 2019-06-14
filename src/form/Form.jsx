@@ -77,20 +77,19 @@ class Form extends Component {
   }
 
   onSubmit() {
-    this.setState({ children: getErrors(this.state.children, true), submited: true }, () => {
+    this.setState({ children: getErrors(this.state.children, true), submited: true }, () => {      
       if (this.state.isValid) {
-        this.props.onSubmit()
-        ;
+        this.props.onSubmit({ message: message => this.setState({ message })});
       }
     });
   }
 
   render() {
     const { actions, onSubmit, width, style, isValid, ...props } = this.props;
-    const { children } = this.state;
+    const { children, message } = this.state;
 
     return (
-      <div className="container" style={{ width, ...style }} {...props}>
+      <div className="container" style={{ width, ...style }} {...props}>        
         <div className="form">
           {children}
         </div>
@@ -98,6 +97,7 @@ class Form extends Component {
           <Button label="Salvar" onClick={onSubmit ? this.onSubmit : null} />
           {actions.map((action, key) => <Button key={key} {...action} />)}
         </div>
+        <div className="message">{message}</div>
       </div>
     );
   }
