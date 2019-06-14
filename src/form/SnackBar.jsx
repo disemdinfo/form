@@ -18,7 +18,7 @@ export default class SnackBar extends Component<Props, State> {
     super(props);
     this.state = {
       showSnackBar: this.props.show,
-      timer: this.props.timer || 4000
+      timer: this.props.timer
     };
   }
 
@@ -28,7 +28,7 @@ export default class SnackBar extends Component<Props, State> {
       this.setState({
         showSnackBar: nextProps.show,
         timer: nextProps.timer
-      }, () => {
+      }, () => {          
         setTimeout(() => {
           this.setState({ showSnackBar: false });
           this.props.onHide();
@@ -37,18 +37,14 @@ export default class SnackBar extends Component<Props, State> {
     }
   }
 
-  render() {
-    const { show } = this.props;
+  render() {    
     const { showSnackBar } = this.state;
-    console.log('showSnackBar', showSnackBar)
+    
     const container = {
       position: 'fixed',
-      left: '20px',
+      left: '0px',
       bottom: '20px',
-      width: '100%',
-      background: '#404040',
-      color: '#fff',
-      padding: '14px',
+      width: '100%',      
       WebkitTransition: 'translate 0.3s cubic-bezier(0, 0, 0.30, 1)',
       transition: 'translate 0.3s cubic-bezier(0, 0, 0.30, 1)',
       fontWeight: '500',
@@ -56,13 +52,11 @@ export default class SnackBar extends Component<Props, State> {
       willChange: 'transform',
       whiteSpace: 'nowrap',
       transform: 'translateY(20px)',
-      WebkitTransform: 'translateY(20px)',
-      boxShadow: '0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24)',
+      WebkitTransform: 'translateY(20px)',      
       fontSize: '14px',
-      opacity: 0,
-      borderRadius: '3px',
-      display: '-webkit-box',
-      display: '-ms-flexbox',
+      opacity: 0,      
+      // display: '-webkit-box',
+      // display: '-ms-flexbox',
       display: 'flex',
       WebkitBoxAlign: 'center',
       msFlexAlign: 'center',
@@ -70,14 +64,20 @@ export default class SnackBar extends Component<Props, State> {
       WebkitBoxPack: 'justify',
       msFlexPack: 'justify',
       justifyContent: 'space-between',
-      lineHeight: '20px',
-      minWidth: 200      
+      lineHeight: '20px',        
     };
 
     const snackbarStyle = { 
-        background: 'red', 
+        background: '#404040',
         marginLeft: 'auto', 
-        marginRight: 'auto' 
+        marginRight: 'auto',
+        borderRadius: '3px',
+        color: '#fff',
+        paddingRight: '24px',
+        paddingLeft: '24px',
+        textAlign: 'center',
+        boxShadow: '0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24)',
+        minWidth: 200    
     };
 
     if (showSnackBar) {
@@ -98,4 +98,8 @@ export default class SnackBar extends Component<Props, State> {
 SnackBar.propTypes = {
   show: PropTypes.bool.isRequired,
   timer: PropTypes.number
+};
+
+SnackBar.defaultProps = {
+  timer: 4000,
 };

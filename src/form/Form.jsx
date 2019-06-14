@@ -100,8 +100,7 @@ class Form extends Component {
         </div>        
         <SnackBar
           show={this.state.showMessage}
-          onHide={() => this.setState({ showMessage: false })}
-          timer={20000}
+          onHide={() => this.setState({ showMessage: false })}          
         >            
           <p>{message}</p>
         </SnackBar>        
