@@ -22,7 +22,7 @@ function getError({ id, value, error, required, min, max }) {
     }
 
     if (error) {
-      return error();
+      return typeof error === 'function' ? error() : error;
     }
   }
 
@@ -44,6 +44,10 @@ function getErrors(children, submited) {
   });
 }
 
+
+function getChildren(children){
+  return Array.isArray(children) ? children : [children];
+}
 function isValidForm(children) {
   return children.filter(c => !Array.isArray(c)).every(c => c.props.isValid);
 }
@@ -55,7 +59,7 @@ class Form extends Component {
     const { children } = props;
 
     this.state = {
-      children,
+      children: getChildren(children),
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -65,7 +69,8 @@ class Form extends Component {
     const { submited } = this.state;
 
     if (nextProps.children !== this.props.children) {
-      let children = Array.isArray(nextProps.children) ? nextProps.children : [nextProps.children];
+      let children = getChildren(nextProps.children);
+
       children = getErrors(children, submited);
 
       this.setState({ children }, () => {

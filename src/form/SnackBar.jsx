@@ -100,10 +100,11 @@ export default class SnackBar extends Component<Props, State> {
 }
 
 SnackBar.propTypes = {
-  show: PropTypes.bool.isRequired,
+  show: PropTypes.bool,
   timer: PropTypes.number,
 };
 
 SnackBar.defaultProps = {
   timer: 4000,
+  show: false
 };

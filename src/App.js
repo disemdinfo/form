@@ -19,7 +19,7 @@ class App extends Component {
         select: 1,
         switchInput: true,
         selectCheckbox: [2],
-        text: 'Teste',
+        text: 'teste',
         textarea: 'The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with reduced sight who use screen readers and enables users to click on the text to toggle the switch. If you would only put some text next to the switch but not inside a label element, the screen reader will just read out "switch off" and the user will have no idea what it is for. The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with reduced sight who use screen readers and enables users to click on the text to toggle the switch. If you would only put some text next to the switch but not inside a label element, the screen reader will just read out "switch off" and the user will have no idea what it is for. The Switch component in the above example is nested inside a label tag. This makes sure that the label text is read out to people with'
       }
     }
@@ -27,7 +27,8 @@ class App extends Component {
     this.onChange = this.onChange.bind(this)
   }
 
-  onChange({ id, value }){  
+  onChange({ id, value }){ 
+    // console.log(id, value) 
     this.setState(({ data }) => ({ data: { ...data, [id]: value } }));    
   }
 
@@ -47,7 +48,7 @@ class App extends Component {
           }]
         }>
 
-        <DateInput
+        {/*<DateInput
           id="date"
           label="Date" 
           required         
@@ -56,7 +57,7 @@ class App extends Component {
           // isValidDate={current => current < new Date('2019-06-20')}
           minDate={new Date('2019-06-20')}
           maxDate={new Date('2019-06-25')}
-        />
+        />*/}
 
         <TextInput
           id="text"
@@ -65,20 +66,21 @@ class App extends Component {
           maxLength={50}         
           value={text} 
           onChange={this.onChange}
-          onBlur={this.onChange}
-          error={() => number > 5 ? 'Number tem que ser menor que 5' : null}
+          onBlur={({ id, value, error }) => {
+            this.onChange({ id, value });
+            error(value === 'teste' ? 'Teste já existe' : null);
+          }}
+          // error={() => text === 'teste' ? 'Teste já existe' : null}
+          // error='errorrrrrrrrrrrrrrr'
         />
 
-        <TextArea
+        {/*<TextArea
           id="textarea"
           label="Text Area" 
-          required 
-          // maxLength={100}         
+          required      
           value={textarea} 
           onChange={this.onChange}
           onBlur={this.onChange}
-          // rows={3}
-          // error={() => number > 5 ? 'Number tem que ser menor que 5' : null}
         />
 
         <NumberInput
@@ -112,7 +114,7 @@ class App extends Component {
           label="Switch"           
           checked={switchInput}          
           onChange={this.onChange}
-        />
+        />*/}
         
 
       </Form>     
