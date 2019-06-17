@@ -37,7 +37,7 @@ class App extends Component {
 
     return (
       <Form 
-        width='50%'
+        width='30%'
         isValid={isValid => this.setState({ isValid }, () => console.log('isValid', isValid))}
         onSubmit={({ message }) => message('Salvo.................')}
         actions={
@@ -48,7 +48,7 @@ class App extends Component {
           }]
         }>
 
-        {/*<DateInput
+        <DateInput
           id="date"
           label="Date" 
           required         
@@ -57,7 +57,7 @@ class App extends Component {
           // isValidDate={current => current < new Date('2019-06-20')}
           minDate={new Date('2019-06-20')}
           maxDate={new Date('2019-06-25')}
-        />*/}
+        />
 
         <TextInput
           id="text"
@@ -71,10 +71,9 @@ class App extends Component {
             error(value === 'teste' ? 'Teste já existe' : null);
           }}
           // error={() => text === 'teste' ? 'Teste já existe' : null}
-          // error='errorrrrrrrrrrrrrrr'
         />
 
-        {/*<TextArea
+        <TextArea
           id="textarea"
           label="Text Area" 
           required      
@@ -114,7 +113,7 @@ class App extends Component {
           label="Switch"           
           checked={switchInput}          
           onChange={this.onChange}
-        />*/}
+        />
         
 
       </Form>     
