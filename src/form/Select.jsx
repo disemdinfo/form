@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import Select from 'react-virtualized-select';
-import 'react-select/dist/react-select.css'
-import 'react-virtualized-select/styles.css'
+import 'react-select/dist/react-select.css';
+import 'react-virtualized-select/styles.css';
 import Container from './Container';
 
 
@@ -58,6 +58,7 @@ InputSelect.defaultProps = {
   clearAllText: 'Remover todos',
   placeholder: 'Digite o que procura',
   noResultsText: 'Nenhum resultado encontrado.',
+  onChange: () => console.log('onchange não definido'),
   // getOptionLabel: option => null,
 };
 

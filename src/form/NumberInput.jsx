@@ -8,7 +8,7 @@ const NumberInput = props => (
     {({ onChange, value, prefix, suffix, ...inputProps }) =>
       (<CurrencyInput
         {...inputProps}
-        value={value.toString().replace('.', ',')}
+        value={(value || '').toString().replace('.', ',')}
         prefix={prefix}
         suffix={suffix}
         onChangeEvent={e => onChange({ e, id: e.target.id, value: Number(e.target.value.replace(/\./g, '').replace(',', '.').replace(prefix, '').replace(suffix, '')) })}
