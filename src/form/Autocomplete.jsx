@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { getData } from '~/lib/api';
 import Select from './Select';
 
 class Autocomplete extends Component {
@@ -11,6 +10,10 @@ class Autocomplete extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.state.value) this.getOptions();
   }
 
   componentWillReceiveProps({ value }) {
@@ -26,7 +29,7 @@ class Autocomplete extends Component {
 
   getOptions() {
     const { value } = this.state;
-    console.log('options', this.state.options);
+
     if (value) {
       Promise.resolve(this.props.getOptions(value)).then(data => this.setState({ options: data })).catch(err => console.error(err));
       // const { baseApi, optionValue, optionLabel } = this.props;

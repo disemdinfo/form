@@ -4,6 +4,10 @@ import Button from './Button';
 import SnackBar from './SnackBar.jsx';
 import './Form.css';
 
+
+function isObject(o) {
+  return typeof o === 'object' && !Array.isArray(o);
+}
 function getError({ id, value, error, required, min, max }) {
   if (id) {
     if (required && value !== 0) {
@@ -31,25 +35,25 @@ function getError({ id, value, error, required, min, max }) {
 
 function getErrors(children, submited) {
   return children.map((c) => {
-    if (Array.isArray(c)) return c;
-    const error = getError(c.props);
+    if (!isObject(c)) return c;
+    const error = c.props ? getError(c.props) : null;
     return ({
       ...c,
       props: {
         ...c.props,
         isValid: !error,
-        error: submited ? getError(c.props) : null,
+        error: submited ? error : null,
       },
     });
   });
 }
 
 
-function getChildren(children){
+function getChildren(children) {
   return Array.isArray(children) ? children : [children];
 }
 function isValidForm(children) {
-  return children.filter(c => !Array.isArray(c)).every(c => c.props.isValid);
+  return children.filter(c => isObject(c)).every(c => c.props.isValid);
 }
 
 class Form extends Component {

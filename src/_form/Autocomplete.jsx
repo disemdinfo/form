@@ -10,7 +10,7 @@ class Autocomplete extends Component {
       options: props.options,
     };
 
-    this.getOptions = this.getOptions.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentWillReceiveProps({ value }) {
@@ -19,14 +19,18 @@ class Autocomplete extends Component {
     }
   }
 
+  onChange() {
+    const { value } = this.state;
+    if (value && value.length > 1) this.getOptions();
+  }
 
   getOptions() {
-    const { baseApi, optionValue, optionLabel } = this.props;
     const { value } = this.state;
-
+    console.log('options', this.state.options);
     if (value) {
-      const inputValue = Number(value) ? { [optionValue]: value } : { [optionLabel]: { $iLike: `%${value}%`.toUpperCase() } };
-      return setTimeout(() => getData(baseApi, { ...inputValue, limit: 10, order: optionLabel }).then(options => this.setState({ options })), 1000);
+      Promise.resolve(this.props.getOptions(value)).then(data => this.setState({ options: data })).catch(err => console.error(err));
+      // const { baseApi, optionValue, optionLabel } = this.props;
+      // return getData(baseApi, { ...inputValue, limit: 10, order: optionLabel }).then(options => this.setState({ options }));
     }
     return [];
   }
@@ -39,7 +43,7 @@ class Autocomplete extends Component {
       <Select
         {...this.props}
         options={options}
-        onInputChange={value => this.setState({ value }, this.getOptions)}
+        onInputChange={value => this.setState({ value }, () => setTimeout(() => this.onChange(), 100))}
       />);
   }
 }
