@@ -115,7 +115,7 @@ class DraftJs extends React.Component {
 
   componentWillReceiveProps({ value }) {
     if (value !== this.props.value && this.state.new) {
-      this.setState({ editorState: toEditorState(value), new: false });
+      this.setState({ editorState: toEditorState(value), new: false }, () => this.onChange(this.state.editorState));
     }
   }
 
