@@ -56,7 +56,7 @@ InputSelect.defaultProps = {
   optionValue: 'value',
   optionLabel: 'label',
   clearAllText: 'Remover todos',
-  placeholder: 'Digite o que procura',
+  placeholder: 'Pesquisar...',
   noResultsText: 'Nenhum resultado encontrado.',
   onChange: () => console.log('onchange não definido'),
   // getOptionLabel: option => null,
