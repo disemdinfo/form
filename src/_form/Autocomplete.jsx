@@ -32,6 +32,8 @@ class Autocomplete extends Component {
 
     if (value) {
       Promise.resolve(this.props.getOptions(value)).then(data => this.setState({ options: data })).catch(err => console.error(err));
+      // const { baseApi, optionValue, optionLabel } = this.props;
+      // return getData(baseApi, { ...inputValue, limit: 10, order: optionLabel }).then(options => this.setState({ options }));
     }
     return [];
   }
@@ -45,8 +47,7 @@ class Autocomplete extends Component {
         {...this.props}
         options={options}
         onInputChange={value => this.setState({ value }, () => setTimeout(() => this.onChange(), 100))}
-      />
-    );
+      />);
   }
 }
 
