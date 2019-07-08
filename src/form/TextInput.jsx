@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Container from './Container';
 
 class TextInput extends Component {
   constructor(props) {
@@ -11,21 +10,19 @@ class TextInput extends Component {
   }
 
   render() {
-    const { maxLength, value } = this.props;
+    const { maxLength, value, onChange, onBlur, ...inputProps } = this.props;
     const info = maxLength ? `${value.length} / ${maxLength}` : null;
     return (
-      <Container {...this.props} info={info} error={this.props.error || this.state.error} >
-        {({ onChange, onBlur, ...inputProps }) =>
-          (<input
-            {...inputProps}
-            onChange={e => onChange({ e, id: e.target.id, value: e.target.value })}
-            onBlur={(e) => {
-              onBlur({ e, id: e.target.id, value: e.target.value, error: error => this.setState({ error }) });
-            }
-            }
-            className="input"
-          />)}
-      </Container>
+      <input
+        {...inputProps}
+        onChange={e => onChange({ e, id: e.target.id, value: e.target.value })}
+        onBlur={(e) => {
+          onBlur({ e, id: e.target.id, value: e.target.value, error: error => this.setState({ error }) });
+        }}
+        info={info}
+        className="input"
+      />
+
     )
     ;
   }

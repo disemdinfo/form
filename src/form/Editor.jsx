@@ -121,20 +121,17 @@ class DraftJs extends React.Component {
 
   render() {
     return (
-      <Container {...this.props} >
-        {({ style, ...props }) => (
-          <div style={style}>
-            <Editor
-              ref={this.setEditor}
-              editorState={this.state.editorState}
-              onEditorStateChange={this.onChange}
-              handlePastedText={this.handlePastedText}
-              toolbar={toolbarOptions}
-            />
-          </div>
-        )}
 
-      </Container>
+      <div style={this.props.style}>
+        <Editor
+          ref={this.setEditor}
+          editorState={this.state.editorState}
+          onEditorStateChange={this.onChange}
+          handlePastedText={this.handlePastedText}
+          toolbar={toolbarOptions}
+        />
+      </div>
+
     );
   }
 }
