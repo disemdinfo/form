@@ -85,7 +85,7 @@ class Form extends Component {
     this.setState({ submited: true }, () => {
       this.setState({ isValid: isValidForm() }, () => {
         if (this.state.isValid) {
-          this.props.onSubmit({ message: message => this.setState({ message, showMessage: true }) });
+          this.props.onSubmit({ message: (message, callback) => this.setState({ message, showMessage: true }, () => (callback ? setTimeout(callback, 3000) : null)) });
         }
       });
     });
