@@ -15,7 +15,6 @@ class InputSelect extends PureComponent {
     const { isMulti, value, onChange, id, optionValue, optionLabel, labelRenderer, ...inputProps } = this.props;
     const options = convertOptions({ options: this.props.options, optionValue, optionLabel, labelRenderer });
 
-
     return (
       <Select
         {...inputProps}
@@ -24,20 +23,23 @@ class InputSelect extends PureComponent {
         ignoreAccents
         isMulti={isMulti}
         id={id}
-        onChange={(nextValue) => {
+        onChange={(v) => {
           let nextValueFormatted = null;
           let selected = null;
           let diff = 0;
+
           if (isMulti) {
-            diff = nextValue.length - value.length;
+            const nextValue = v || [];
+            const previousValue = value || [];
+            diff = nextValue.length - previousValue.length;
             nextValueFormatted = nextValue.map(i => i.value);
             if (diff < 0) {
-              selected = value.filter(v => !nextValueFormatted.includes(v))[0];
+              selected = previousValue.filter(v => !nextValueFormatted.includes(v))[0];
             } else {
-              selected = nextValueFormatted.filter(v => !value.includes(v))[0];
+              selected = nextValueFormatted.filter(v => !previousValue.includes(v))[0];
             }
           } else {
-            nextValueFormatted = (nextValue || {}).value;
+            nextValueFormatted = (v || {}).value;
           }
 
           onChange({ id, value: nextValueFormatted, selected, diff });

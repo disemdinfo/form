@@ -3,19 +3,15 @@ import PropTypes from 'prop-types';
 import CurrencyInput from 'react-currency-input';
 import Container from './Container';
 
-const NumberInput = props => (
-  <Container {...props} >
-    {({ onChange, value, prefix, suffix, ...inputProps }) =>
-      (<CurrencyInput
-        {...inputProps}
-        value={(value || '').toString().replace('.', ',')}
-        prefix={prefix}
-        suffix={suffix}
-        onChangeEvent={e => onChange({ e, id: e.target.id, value: Number(e.target.value.replace(/\./g, '').replace(',', '.').replace(prefix, '').replace(suffix, '')) })}
-        className="input input-number"
-      />)
-    }
-  </Container>
+const NumberInput = ({ onChange, value, prefix, suffix, ...inputProps }) => (
+  <CurrencyInput
+    {...inputProps}
+    value={(value || '').toString().replace('.', ',')}
+    prefix={prefix}
+    suffix={suffix}
+    onChangeEvent={e => onChange({ e, id: e.target.id, value: Number(e.target.value.replace(/\./g, '').replace(',', '.').replace(prefix, '').replace(suffix, '')) })}
+    className="input input-number"
+  />
 );
 
 NumberInput.propTypes = {

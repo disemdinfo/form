@@ -6,7 +6,7 @@ const Label = ({ children, htmlFor }) => (
 );
 
 const Container = ({ children, label, id, error, isValid, info, styleInput, validate, actions, ...props }) => (
-  <div error={error} style={styleInput} className="input-container" >
+  <div error={error} style={styleInput} className={`input-container ${error ? 'input-error' : ''}`} >
     {label && <Label htmlFor={id}>{label}</Label>}
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <div style={{ width: '100%', marginRight: 5 }}>
@@ -27,8 +27,8 @@ Container.defaultProps = {
   value: '',
   actions: [],
   styleInput: {
-    marginTop: 20,
-    marginBottom: 10,
+    // marginTop: 20,
+    // marginBottom: 10,
   },
 };
 

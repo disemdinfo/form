@@ -1,19 +1,16 @@
 import React from 'react';
 import './Input.css';
 
-const Label = ({ children, htmlFor, ...props }) => (
+const Label = ({ children, htmlFor }) => (
   <label htmlFor={htmlFor} className="label">{children}</label>
 );
 
-const Container = ({ children, label, id, error, info, styleInput, validate, actions, ...props }) => (
-  <div style={styleInput} className="input-container">
+const Container = ({ children, label, id, error, isValid, info, styleInput, validate, actions, ...props }) => (
+  <div error={error} style={styleInput} className="input-container" >
     {label && <Label htmlFor={id}>{label}</Label>}
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <div style={{ width: '100%', marginRight: 5 }}>
-        {children({
-          id,
-          ...props,
-        })}
+        {children}
       </div>
       <div>
         {actions.map(action => <div>{action}</div>)}

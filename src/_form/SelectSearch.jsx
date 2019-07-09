@@ -45,46 +45,21 @@ class SelectSearch extends PureComponent {
   }
 
   render() {
-    const { isMulti, value } = this.props;
+    const { isMulti, value, getOptions, onChange, id, optionValue, optionLabel, labelRenderer, ...inputProps } = this.props;
 
+    // const options = convertOptions({ options: props.options, optionValue, optionLabel, labelRenderer });
     return (
-      <Container {...this.props} >
-        {(props) => {
-          const { getOptions, onChange, id, optionValue, optionLabel, labelRenderer, ...inputProps } = props;
-          // const options = convertOptions({ options: props.options, optionValue, optionLabel, labelRenderer });
 
-
-          return (
-            <Select
-              {...inputProps}
-              // value={isMulti ? options.filter(o => value.includes(o.value)) : options.find(o => o.value === value)}
-              loadOptions={this.promiseOptions}
-              value={this.state.value}
-              // ignoreAccents
-              cacheOptions
-              defaultOptions
-              onChange={v => this.setState({ value: v })}
-              // onChange={(nextValue) => {
-              //  let nextValueFormatted = null;
-              //  let selected = null;
-              //  let diff = 0;
-              //  if (isMulti) {
-              //    diff = nextValue.length - value.length;
-              //    nextValueFormatted = nextValue.map(i => i.value);
-              //    if (diff < 0) {
-              //      selected = value.filter(v => !nextValueFormatted.includes(v))[0];
-              //    } else {
-              //      selected = nextValueFormatted.filter(v => !value.includes(v))[0];
-              //    }
-              //  } else {
-              //    nextValueFormatted = (nextValue || {}).value;
-              //  }
-
-              //  onChange({ id, value: nextValueFormatted, selected, diff });
-              // }}
-            />);
-        }}
-      </Container>);
+      <Select
+        {...inputProps}
+        // value={isMulti ? options.filter(o => value.includes(o.value)) : options.find(o => o.value === value)}
+        loadOptions={this.promiseOptions}
+        value={this.state.value}
+        // ignoreAccents
+        cacheOptions
+        defaultOptions
+        onChange={v => this.setState({ value: v })}
+      />);
   }
 }
 

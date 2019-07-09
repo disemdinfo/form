@@ -55,10 +55,12 @@ class SelectSearch extends PureComponent {
         // value={isMulti ? options.filter(o => value.includes(o.value)) : options.find(o => o.value === value)}
         loadOptions={this.promiseOptions}
         value={this.state.value}
-        // ignoreAccents
         cacheOptions
         defaultOptions
-        onChange={v => this.setState({ value: v })}
+        // onChange={v => this.setState({ value: v })}
+        onChange={v => onChange({ id, value: v.value })}
+
+
       />);
   }
 }

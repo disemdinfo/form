@@ -105,6 +105,6 @@ SnackBar.propTypes = {
 };
 
 SnackBar.defaultProps = {
-  timer: 4000,
-  show: false
+  timer: 3000,
+  show: false,
 };
