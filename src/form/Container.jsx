@@ -5,8 +5,8 @@ const Label = ({ children, htmlFor }) => (
   <label htmlFor={htmlFor} className="label">{children}</label>
 );
 
-const Container = ({ children, label, id, error, isValid, info, styleInput, validate, actions, ...props }) => (
-  <div error={error} style={styleInput} className={`input-container ${error ? 'input-error' : ''}`} >
+const Container = ({ children, label, id, error, info, inputStyle, actions, ...props }) => (
+  <div error={error} style={inputStyle} className={`input-container ${error ? 'input-error' : ''}`} >
     {label && <Label htmlFor={id}>{label}</Label>}
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <div style={{ width: '100%', marginRight: 5 }}>
@@ -26,9 +26,9 @@ const Container = ({ children, label, id, error, isValid, info, styleInput, vali
 Container.defaultProps = {
   value: '',
   actions: [],
-  styleInput: {
-    // marginTop: 20,
-    // marginBottom: 10,
+  inputStyle: {
+    marginTop: 20,
+    marginBottom: 10,
   },
 };
 
