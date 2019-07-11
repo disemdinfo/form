@@ -90,6 +90,8 @@ class Form extends Component {
       return children;
     } else if (isArray(children)) {
       return children.map(c => this.getElements(c));
+    } else if (children.props.hide) {
+      return null;
     } else if (children.props.children) {
       return { ...children, props: { ...children.props, children: this.getElements(children.props.children) } };
     } else if (!children.props.id) {
