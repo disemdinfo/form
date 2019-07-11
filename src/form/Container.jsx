@@ -27,8 +27,7 @@ Container.defaultProps = {
   value: '',
   actions: [],
   inputStyle: {
-    marginTop: 20,
-    marginBottom: 10,
+    marginBottom: 16,
   },
 };
 

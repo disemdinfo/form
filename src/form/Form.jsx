@@ -101,11 +101,17 @@ class Form extends Component {
 
 
   render() {
-    const { actions, onSubmit, width, style, ...props } = this.props;
+    const { actions, onSubmit, title, width, style, ...props } = this.props;
     const { children, message, isValid } = this.state;
 
     return (
       <div className="container" style={{ width, ...style }} {...props}>
+        {title &&
+        <div>
+          <h1>{title}</h1>
+          <hr />
+          <br />
+        </div>}
         <div className="form">
           {children}
         </div>
