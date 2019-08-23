@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Container from './Container';
 import Button from './Button';
-import SnackBar from './SnackBar.jsx';
+import SnackBar from './SnackBar';
 import './Form.css';
 
 function isObject(o) {
   return o && typeof o === 'object';
 }
-function isArray(o) {
-  return o && Array.isArray(o);
+function isArray(a) {
+  return a && Array.isArray(a);
 }
 function getError(props) {
   if (props) {
-    const { id, value, error, required, min, max } = props;
+    const { id, value, error, required, min, max, minlength, maxlength } = props;
     if (id) {
       if (required && value !== 0) {
         const text = 'Campo obrigatório.';
@@ -22,13 +22,11 @@ function getError(props) {
         } else if (!value) return text;
       }
 
-      if (min) {
-        if (value < min) return `Mínimo ${min}.`;
-      }
+      if (min && value < min) return `Mínimo ${min}.`;
+      if (minlength && value && value.length < minlength) return `Mínimo de ${minlength} caracteres.`;
 
-      if (max) {
-        if (value > max) return `Máximo ${max}.`;
-      }
+      if (max && value > max) return `Máximo ${max}.`;
+      if (maxlength && value && value.length > maxlength) return `Máximo de ${maxlength} caracteres.`;
 
       if (error) {
         return typeof error === 'function' ? error() : error;
@@ -52,12 +50,9 @@ class Form extends Component {
       message: '',
     };
 
+    this.state.children = this.getElements(props.children);
     this.onSubmit = this.onSubmit.bind(this);
   }
-
-  // static getDerivedStateFromProps(props, state) {
-  //   console.log(props.children, state.children);
-  // }
 
   componentWillReceiveProps({ children }) {
     if (children !== this.props.children) {
@@ -84,8 +79,6 @@ class Form extends Component {
   }
 
   getElements(children) {
-    const { inputStyle } = this.props;
-    const { submited } = this.state;
     if (!isObject(children)) {
       return children;
     } else if (isArray(children)) {
@@ -98,28 +91,29 @@ class Form extends Component {
       return children;
     }
 
-    return <Container error={submited ? getError(children.props) : null} inputStyle={inputStyle} {...children.props} >{children}</Container>;
+    return (
+      <Container
+        {...children.props}
+        inputStyle={this.props.inputStyle}
+        error={this.state.submited ? getError(children.props) : null}
+      >
+        {children}
+      </Container>);
   }
 
 
   render() {
-    const { actions, onSubmit, title, width, style, ...props } = this.props;
+    const { actions, onSubmit, width, style, ...props } = this.props;
     const { children, message, isValid } = this.state;
 
     return (
       <div className="container" style={{ width, ...style }} {...props}>
-        {title &&
-        <div>
-          <h1>{title}</h1>
-          <hr />
-          <br />
-        </div>}
         <div className="form">
           {children}
         </div>
         <div className="actions">
-          <Button label="Salvar" onClick={onSubmit ? this.onSubmit : null} disabled={!isValid} />
-          {actions.map(action => <Button key={action.id} {...action} />)}
+          {onSubmit && <Button label="Salvar" onClick={onSubmit ? this.onSubmit : null} disabled={!isValid} />}
+          {actions.filter(a => a.hide !== true).map(action => <Button key={action.id} {...action} />)}
         </div>
         <SnackBar
           show={this.state.showMessage}
@@ -139,6 +133,7 @@ Form.propTypes = {
   width: PropTypes.string,
   style: PropTypes.object,
   isValid: PropTypes.func,
+  inputStyle: PropTypes.object,
 };
 
 Form.defaultProps = {

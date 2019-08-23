@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import Select from 'react-select/async';
-import Container from './Container';
 
 function convertOptions({ options, optionValue, optionLabel, labelRenderer }) {
   return options.map(option => ({ value: option[optionValue], label: labelRenderer ? labelRenderer(option) : option[optionLabel] }));
@@ -30,38 +29,36 @@ class SelectSearch extends PureComponent {
   }
 
   setValue(value) {
-    Promise.resolve(this.props.getOptions(value)).then(data => this.setState({ value: data[0] }));
+    Promise.resolve(this.props.getOptions(value)).then((data) => {
+      this.setState({ value: data[0] });
+    });
   }
 
   promiseOptions(inputValue) {
-    if (inputValue && inputValue.length > 1) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(this.props.getOptions(inputValue));
-        }, 500);
-      });
-    }
-    return [];
+    // if (inputValue) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(this.props.getOptions(inputValue, this.props.params));
+      }, 500);
+    });
+    // }
+    // return Promise.resolve();
   }
 
   render() {
-    const { isMulti, value, getOptions, onChange, id, optionValue, optionLabel, labelRenderer, ...inputProps } = this.props;
+    const { isMulti, value, getOptions, onChange, id, optionValue, optionLabel, labelRenderer, style, ...inputProps } = this.props;
 
-    // const options = convertOptions({ options: props.options, optionValue, optionLabel, labelRenderer });
     return (
-
       <Select
         {...inputProps}
-        // value={isMulti ? options.filter(o => value.includes(o.value)) : options.find(o => o.value === value)}
         loadOptions={this.promiseOptions}
-        value={this.state.value}
+        value={this.state.value || ''}
         cacheOptions
         defaultOptions
-        // onChange={v => this.setState({ value: v })}
-        onChange={v => onChange({ id, value: v.value })}
-
-
-      />);
+        onChange={v => onChange({ ...v, id })}
+        styles={{ container: provided => ({ ...provided, ...style }), menu: provided => ({ ...provided, zIndex: 999 }) }}
+      />
+    );
   }
 }
 
@@ -72,9 +69,12 @@ SelectSearch.defaultProps = {
   optionValue: 'value',
   optionLabel: 'label',
   clearAllText: 'Remover todos',
-  placeholder: 'Pesquisar...',
+  placeholder: '',
   noResultsText: 'Nenhum resultado encontrado.',
   onChange: () => console.log('onchange não definido'),
+  params: {
+    limit: 10,
+  },
   // getOptionLabel: option => null,
 };
 

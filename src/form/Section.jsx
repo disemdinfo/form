@@ -19,7 +19,7 @@ const styles = {
 
 
 };
-const Card = ({ children, title, ...props }) => (
+const Section = ({ children, title, ...props }) => (
   <div style={styles.container}>
     <div style={styles.header}>{title}</div>
     <div style={styles.body}>
@@ -28,7 +28,7 @@ const Card = ({ children, title, ...props }) => (
   </div>
 );
 
-Card.defaultProps = {
+Section.defaultProps = {
 };
 
-export default Card;
+export default Section;

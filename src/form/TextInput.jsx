@@ -10,7 +10,7 @@ class TextInput extends Component {
   }
 
   render() {
-    const { maxLength, value, onChange, onBlur, ...props } = this.props;
+    const { maxLength, value, onChange, onBlur, style, ...props } = this.props;
     const info = maxLength ? `${value.length} / ${maxLength}` : null;
     return (
       <input
@@ -21,6 +21,7 @@ class TextInput extends Component {
         onBlur={e => onBlur({ e, id: e.target.id, value: e.target.value, error: error => this.setState({ error }) })}
         info={info}
         className="input"
+        style={{ width: '100%', ...style }}
       />);
   }
 }
@@ -28,6 +29,7 @@ class TextInput extends Component {
 TextInput.defaultProps = {
   value: '',
   onBlur: () => null,
+  type: 'text',
 };
 
 export default TextInput;

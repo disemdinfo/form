@@ -1,8 +1,7 @@
 import React from 'react';
-import Container from './Container';
 
 const TextArea = (props) => {
-  const { maxLength, value, onChange, onBlur } = props;
+  const { maxLength, value, onChange, onBlur, style, ...inputProps } = props;
   const info = maxLength ? `${value.length} / ${maxLength}` : null;
   return (
     <textarea
@@ -11,6 +10,7 @@ const TextArea = (props) => {
       onBlur={e => onBlur({ e, id: e.target.id, value: e.target.value })}
       className="input"
       value={value}
+      style={{ width: '100%', ...style }}
     />);
 };
 

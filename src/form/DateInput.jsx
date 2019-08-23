@@ -1,13 +1,13 @@
 import React from 'react';
-import Container from './Container';
 import Datetime from 'react-datetime';
+import moment from '~/lib/moment';
 import 'react-datetime/css/react-datetime.css';
 
 const DateInput = ({ onChange, id, value, closeOnSelect, timeFormat, isValidDate, minDate, maxDate, ...inputProps }) => (
 
   <Datetime
     id={id}
-    value={value}
+    value={value ? moment(value).utc() : null}
     closeOnSelect={closeOnSelect}
     timeFormat={timeFormat}
     isValidDate={(current) => {

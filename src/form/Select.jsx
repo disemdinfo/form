@@ -12,17 +12,18 @@ class InputSelect extends PureComponent {
   }
 
   render() {
-    const { isMulti, value, onChange, id, optionValue, optionLabel, labelRenderer, ...inputProps } = this.props;
+    const { isMulti, value, onChange, id, optionValue, optionLabel, labelRenderer, style, ...inputProps } = this.props;
     const options = convertOptions({ options: this.props.options, optionValue, optionLabel, labelRenderer });
 
     return (
       <Select
         {...inputProps}
-        value={isMulti ? options.filter(o => value.includes(o.value)) : options.find(o => o.value === value)}
+        value={(isMulti ? options.filter(o => value.includes(o.value)) : options.find(o => o.value === value)) || ''}
         options={options}
         ignoreAccents
         isMulti={isMulti}
         id={id}
+        styles={{ container: provided => ({ ...provided, ...style }), menu: provided => ({ ...provided, zIndex: 999 }) }}
         onChange={(v) => {
           let nextValueFormatted = null;
           let selected = null;
@@ -42,7 +43,7 @@ class InputSelect extends PureComponent {
             nextValueFormatted = (v || {}).value;
           }
 
-          onChange({ id, value: nextValueFormatted, selected, diff });
+          onChange({ ...v, id, value: nextValueFormatted, selected, diff });
         }}
       />);
   }
@@ -55,9 +56,10 @@ InputSelect.defaultProps = {
   optionValue: 'value',
   optionLabel: 'label',
   clearAllText: 'Remover todos',
-  placeholder: 'Pesquisar...',
+  placeholder: '',
   noResultsText: 'Nenhum resultado encontrado.',
   onChange: () => console.log('onchange não definido'),
+  autoFocus: false,
   // getOptionLabel: option => null,
 };
 

@@ -42,3 +42,13 @@
 .info {
   color: rgba(0,0,0,0.74);  
 }
+
+textarea[disabled]{
+  background: rgb(242, 242, 242);
+  border-color: rgb(230, 230, 230)
+}
+
+input[type="text"][disabled] {  
+  background: rgb(242, 242, 242);
+  border-color: rgb(230, 230, 230)
+}
