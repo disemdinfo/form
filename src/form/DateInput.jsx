@@ -1,6 +1,6 @@
 import React from 'react';
 import Datetime from 'react-datetime';
-import moment from '~/lib/moment';
+import moment from 'moment';
 import 'react-datetime/css/react-datetime.css';
 
 const DateInput = ({ onChange, id, value, closeOnSelect, timeFormat, isValidDate, minDate, maxDate, ...inputProps }) => (

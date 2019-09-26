@@ -1,5 +1,5 @@
 import React from 'react';
-import './Form.css';
+import './form.css';
 
 function isJson(str) {
   if (Number(str)) return false;

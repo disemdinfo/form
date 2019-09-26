@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 // import { teste } from '~/store/params';
 import Container from './Container';
 import Button from './Button';
-import SnackBar from './SnackBar';
-import './Form.css';
+import './form.css';
 
 export const msg = text => dispatch => dispatch({ type: 'SUCCESS', msg: text });
 
@@ -126,7 +125,7 @@ class Form extends Component {
 
   render() {
     const { actions, onSubmit, width, style, ...props } = this.props;
-    const { children, message, isValid, submited } = this.state;
+    const { children, isValid, submited } = this.state;
 
     return (
       <div className="container" style={{ width, ...style }} {...props}>
@@ -137,13 +136,6 @@ class Form extends Component {
           {onSubmit && <Button label="Salvar" onClick={onSubmit ? this.onSubmit : null} disabled={!isValid && submited} />}
           {actions.filter(a => a.hide !== true).map(({ id, ...actionProps }) => <Button {...actionProps} key={id} onClick={() => this.onClickAction({ id, ...actionProps })} />)}
         </div>
-        {/* <SnackBar
-          show={this.state.showMessage}
-          onHide={() => this.setState({ showMessage: false })}
-        >
-          {message}
-        </SnackBar> */}
-
       </div>
     );
   }
@@ -168,4 +160,7 @@ Form.defaultProps = {
   isValid: () => false,
 };
 
-export default connect(() => {}, { msg })(Form);
+// export default connect(() => {}, { msg })(Form);
+export default (Form);
+
+

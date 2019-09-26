@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CurrencyInput from 'react-currency-input';
-import Container from './Container';
 
 const NumberInput = ({ onChange, value, prefix, suffix, ...inputProps }) => (
   <CurrencyInput

@@ -1,5 +1,4 @@
 import React from 'react';
-import Container from './Container';
 import Switch from 'react-switch';
 
 const styles = {
