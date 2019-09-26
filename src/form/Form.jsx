@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+// import { teste } from '~/store/params';
 import Container from './Container';
 import Button from './Button';
 import SnackBar from './SnackBar';
 import './Form.css';
+
+export const msg = text => dispatch => dispatch({ type: 'SUCCESS', msg: text });
 
 function isObject(o) {
   return o && typeof o === 'object';
@@ -52,6 +56,11 @@ class Form extends Component {
 
     this.state.children = this.getElements(props.children);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onClickAction = this.onClickAction.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.isValid(isValidForm());
   }
 
   componentWillReceiveProps({ children }) {
@@ -65,17 +74,28 @@ class Form extends Component {
     }
   }
 
-
   onSubmit() {
     this.setState({ submited: true }, () => {
       this.setState({ children: this.getElements(this.props.children) }, () => {
         this.setState({ isValid: isValidForm() }, () => {
           if (this.state.isValid) {
-            this.props.onSubmit({ message: (message, callback) => this.setState({ message, showMessage: true }, () => (callback ? setTimeout(callback, 3000) : null)) });
+            // this.props.onSubmit({ message: (message, callback) => this.setState({ message, showMessage: true }, () => (callback ? setTimeout(callback, 3000) : null)) });
+            this.props.onSubmit({ message: (message, callback) => {
+              this.props.msg(message);
+              if (callback) callback();
+            } });
           }
         });
       });
     });
+  }
+
+  onClickAction({ onClick, ...params }) {
+    onClick({ ...params,
+      message: (message, callback) => {
+        if (message) this.props.msg(message);
+        if (callback) callback();
+      } });
   }
 
   getElements(children) {
@@ -95,7 +115,9 @@ class Form extends Component {
       <Container
         {...children.props}
         inputStyle={this.props.inputStyle}
-        error={this.state.submited ? getError(children.props) : null}
+        // error={this.state.submited ? getError(children.props) : null}
+        error={getError(children.props)}
+        submited={this.state.submited}
       >
         {children}
       </Container>);
@@ -104,7 +126,7 @@ class Form extends Component {
 
   render() {
     const { actions, onSubmit, width, style, ...props } = this.props;
-    const { children, message, isValid } = this.state;
+    const { children, message, isValid, submited } = this.state;
 
     return (
       <div className="container" style={{ width, ...style }} {...props}>
@@ -112,15 +134,16 @@ class Form extends Component {
           {children}
         </div>
         <div className="actions">
-          {onSubmit && <Button label="Salvar" onClick={onSubmit ? this.onSubmit : null} disabled={!isValid} />}
-          {actions.filter(a => a.hide !== true).map(action => <Button key={action.id} {...action} />)}
+          {onSubmit && <Button label="Salvar" onClick={onSubmit ? this.onSubmit : null} disabled={!isValid && submited} />}
+          {actions.filter(a => a.hide !== true).map(({ id, ...actionProps }) => <Button {...actionProps} key={id} onClick={() => this.onClickAction({ id, ...actionProps })} />)}
         </div>
-        <SnackBar
+        {/* <SnackBar
           show={this.state.showMessage}
           onHide={() => this.setState({ showMessage: false })}
         >
           {message}
-        </SnackBar>
+        </SnackBar> */}
+
       </div>
     );
   }
@@ -133,6 +156,7 @@ Form.propTypes = {
   width: PropTypes.string,
   style: PropTypes.object,
   isValid: PropTypes.func,
+  msg: PropTypes.func.isRequired,
   inputStyle: PropTypes.object,
 };
 
@@ -144,4 +168,4 @@ Form.defaultProps = {
   isValid: () => false,
 };
 
-export default Form;
+export default connect(() => {}, { msg })(Form);

@@ -12,7 +12,7 @@ const Label = ({ children, htmlFor }) => (
   <label htmlFor={htmlFor} className="label">{children}</label>
 );
 
-const Container = ({ children, label, id, error, info, inputWidth, inputStyle, actions, ...props }) => (
+const Container = ({ children, label, id, error, info, inputWidth, inputStyle, actions, submited, ...props }) => (
   <div error={error} style={{ ...styles.inputStyle, ...inputStyle, width: inputWidth }} className={`input-container ${error ? 'input-error' : ''}`} >
     {label && <Label htmlFor={id}>{label}</Label>}
     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -22,7 +22,7 @@ const Container = ({ children, label, id, error, info, inputWidth, inputStyle, a
       {actions.map(action => action)}
     </div>
     <div className="footer">
-      <small className="error">{error}</small>
+      {submited && <small className="error">{error}</small>}
       <small className="info">{info}</small>
     </div>
   </div>
@@ -37,12 +37,14 @@ Container.propTypes = {
   inputWidth: PropTypes.func,
   inputStyle: PropTypes.object,
   actions: PropTypes.object,
+  submited: PropTypes.bool,
 };
 
 Container.defaultProps = {
   label: null,
   error: null,
   info: null,
+  submited: false,
   value: '',
   actions: [],
   inputWidth: '100%',

@@ -52,3 +52,9 @@ input[type="text"][disabled] {
   background: rgb(242, 242, 242);
   border-color: rgb(230, 230, 230)
 }
+
+input[type=radio] {
+  -ms-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);  
+}

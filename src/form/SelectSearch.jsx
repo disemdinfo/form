@@ -72,9 +72,9 @@ SelectSearch.defaultProps = {
   placeholder: '',
   noResultsText: 'Nenhum resultado encontrado.',
   onChange: () => console.log('onchange não definido'),
-  params: {
-    limit: 10,
-  },
+  // params: {
+  //   limit: 10,
+  // },
   // getOptionLabel: option => null,
 };
 
