@@ -1,5 +1,6 @@
 import React from 'react';
 import Switch from 'react-switch';
+import Label from './Label';
 
 const styles = {
   container: {
@@ -11,12 +12,12 @@ const styles = {
     marginRight: 10,
   },
 };
-const SwitchInput = ({ onChange, id, width, leftLable, rightLabel, ...inputProps }) => {
+const SwitchInput = ({ onChange, id, width, leftLable, rightLabel, label, ...inputProps }) => {
   const height = width * 0.4166;
   const handleDiameter = width * 0.625;
   return (
     <label htmlFor="material-switch" style={styles.container}>
-      {leftLable}
+      <Label>{leftLable}</Label>
       <div style={styles.switch}>
         <Switch
           {...inputProps}
@@ -29,7 +30,7 @@ const SwitchInput = ({ onChange, id, width, leftLable, rightLabel, ...inputProps
           onChange={checked => onChange({ id, value: checked })}
         />
       </div>
-      {rightLabel}
+      <Label>{rightLabel || label}</Label>
     </label>
   );
 };
@@ -44,6 +45,7 @@ SwitchInput.defaultProps = {
   onColor: '#86d3ff',
   onHandleColor: '#1976d2',
   className: 'react-switch',
+  onChange: () => {}
 };
 
 export default SwitchInput;

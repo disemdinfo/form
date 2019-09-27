@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import { teste } from '~/store/params';
-import Container from './Container';
 import Button from './Button';
 import './form.css';
 
@@ -43,98 +41,80 @@ function isValidForm() {
   return !document.getElementsByClassName('input-error').length;
 }
 
+const Input = ({ children, id, error, info, inputStyle, inputWidth, submited, ...props }) => (
+  <div error={error} style={{ width: inputWidth || '100%', ...inputStyle }} className={`input-container ${error ? 'input-error' : ''}`} >               
+    {children}          
+    <div className="footer">
+      {submited && <small className="error">{error}</small>}
+      <small className="info">{info}</small>
+    </div>
+  </div>
+);
+
 class Form extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isValid: true,
-      submited: false,
-      message: '',
+      isValid: false,
+      // submited: false,      
     };
 
-    this.state.children = this.getElements(props.children);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onClickAction = this.onClickAction.bind(this);
+    this.state.children = this.getInputs(props.children);    
   }
 
   componentDidMount() {
     this.props.isValid(isValidForm());
   }
 
-  componentWillReceiveProps({ children }) {
-    if (children !== this.props.children) {
-      this.setState({ children: this.getElements(children) }, () => {
-        const isValid = isValidForm();
-        if (isValid !== this.state.isValid) {
-          this.setState({ isValid }, () => this.props.isValid(isValid));
-        }
-      });
-    }
+  componentWillReceiveProps({ children, submited }) {
+    if (children !== this.props.children) this.setInputs(children);    
+    if(submited !== this.props.submited) this.setState({ submited }, () => this.setInputs(children));
   }
 
-  onSubmit() {
-    this.setState({ submited: true }, () => {
-      this.setState({ children: this.getElements(this.props.children) }, () => {
-        this.setState({ isValid: isValidForm() }, () => {
-          if (this.state.isValid) {
-            // this.props.onSubmit({ message: (message, callback) => this.setState({ message, showMessage: true }, () => (callback ? setTimeout(callback, 3000) : null)) });
-            this.props.onSubmit({ message: (message, callback) => {
-              this.props.msg(message);
-              if (callback) callback();
-            } });
-          }
-        });
-      });
+  setInputs(children){
+    this.setState({ children: this.getInputs(children) }, () => {
+      const isValid = isValidForm();        
+      if (isValid !== this.state.isValid) {
+        this.setState({ isValid }, () => this.props.isValid(isValid));
+      }
     });
   }
 
-  onClickAction({ onClick, ...params }) {
-    onClick({ ...params,
-      message: (message, callback) => {
-        if (message) this.props.msg(message);
-        if (callback) callback();
-      } });
-  }
-
-  getElements(children) {
+  getInputs(children) {
     if (!isObject(children)) {
       return children;
     } else if (isArray(children)) {
-      return children.map(c => this.getElements(c));
+      return children.map(c => this.getInputs(c));
     } else if (children.props.hide) {
       return null;
     } else if (children.props.children) {
-      return { ...children, props: { ...children.props, children: this.getElements(children.props.children) } };
+      return { ...children, props: { ...children.props, children: this.getInputs(children.props.children) } };
     } else if (!children.props.id) {
       return children;
     }
 
     return (
-      <Container
+      <Input
         {...children.props}
-        inputStyle={this.props.inputStyle}
-        // error={this.state.submited ? getError(children.props) : null}
+        inputStyle={this.props.inputStyle}        
         error={getError(children.props)}
         submited={this.state.submited}
       >
         {children}
-      </Container>);
+      </Input>);
   }
-
 
   render() {
     const { actions, onSubmit, width, style, ...props } = this.props;
-    const { children, isValid, submited } = this.state;
-
+    const { children, isValid } = this.state;    
     return (
       <div className="container" style={{ width, ...style }} {...props}>
         <div className="form">
           {children}
         </div>
-        <div className="actions">
-          {onSubmit && <Button label="Salvar" onClick={onSubmit ? this.onSubmit : null} disabled={!isValid && submited} />}
-          {actions.filter(a => a.hide !== true).map(({ id, ...actionProps }) => <Button {...actionProps} key={id} onClick={() => this.onClickAction({ id, ...actionProps })} />)}
+        <div className="actions">          
+          {actions.filter(a => a.hide !== true).map(({ id, ...actionProps }) => <Button {...actionProps} key={id} />)}          
         </div>
       </div>
     );
@@ -157,7 +137,12 @@ Form.defaultProps = {
   actions: [],
   width: '100%',
   style: {},
-  isValid: () => false,
+  isValid: () => false,  
+  inputStyle: {
+    marginBottom: 16,
+    paddingRight: 4,
+    paddingLeft: 4,
+  },
 };
 
 // export default connect(() => {}, { msg })(Form);

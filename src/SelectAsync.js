@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react';
 import Select from 'react-select/async';
+import ComponentContainer from './ComponentContainer';
+import './react-select.css';
 
 function convertOptions({ options, optionValue, optionLabel, labelRenderer }) {
   return options.map(option => ({ value: option[optionValue], label: labelRenderer ? labelRenderer(option) : option[optionLabel] }));
 }
 
-class SelectSearch extends PureComponent {
+class SelectAsync extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,23 +48,25 @@ class SelectSearch extends PureComponent {
   }
 
   render() {
-    const { isMulti, value, getOptions, onChange, id, optionValue, optionLabel, labelRenderer, style, ...inputProps } = this.props;
+    const { label, isMulti, value, getOptions, onChange, id, optionValue, optionLabel, labelRenderer, style, ...inputProps } = this.props;
 
     return (
-      <Select
-        {...inputProps}
-        loadOptions={this.promiseOptions}
-        value={this.state.value || ''}
-        cacheOptions
-        defaultOptions
-        onChange={v => onChange({ ...v, id })}
-        styles={{ container: provided => ({ ...provided, ...style }), menu: provided => ({ ...provided, zIndex: 999 }) }}
-      />
+      <ComponentContainer label={label}>
+        <Select
+          {...inputProps}
+          loadOptions={this.promiseOptions}
+          value={this.state.value || ''}
+          cacheOptions
+          defaultOptions
+          onChange={v => onChange({ ...v, id })}
+          styles={{ container: provided => ({ ...provided, ...style }), menu: provided => ({ ...provided, zIndex: 999 }) }}
+        />
+      </ComponentContainer>
     );
   }
 }
 
-SelectSearch.defaultProps = {
+SelectAsync.defaultProps = {
   options: [],
   searchable: true,
   isMulti: false,
@@ -78,4 +82,4 @@ SelectSearch.defaultProps = {
   // getOptionLabel: option => null,
 };
 
-export default SelectSearch;
+export default SelectAsync;
