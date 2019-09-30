@@ -8,6 +8,8 @@ import SelectAsync from './SelectAsync';
 import Switch from './Switch';
 import TextArea from './TextArea';
 import TextInput from './TextInput';
+import Grid from './grid/Grid';
+import Cell from './grid/Cell';
 
-export { Button, DateInput, NumberInput, Radio, Select, SelectAsync, Switch, TextArea, TextInput };
+export { Button, DateInput, NumberInput, Radio, Select, SelectAsync, Switch, TextArea, TextInput, Grid, Cell };
 export default Form;

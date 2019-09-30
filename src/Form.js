@@ -139,9 +139,9 @@ Form.defaultProps = {
   style: {},
   isValid: () => false,  
   inputStyle: {
-    marginBottom: 16,
-    paddingRight: 4,
-    paddingLeft: 4,
+    // marginBottom: 16,
+    // paddingRight: 4,
+    // paddingLeft: 4,
   },
 };
 
