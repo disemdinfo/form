@@ -1,4 +1,11 @@
 
+.label {    
+  padding-left: 4px;
+  padding-bottom: 4px;
+  font-size: 16px;
+  color: rgba(0,0,0,0.74)
+}
+
 .input {  
   font-size: 15px;
   font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -13,13 +20,6 @@
 
 .input-number{
   text-align: right;
-}
-
-.label {    
-  padding-left: 4px;
-  padding-bottom: 4px;
-  font-size: 16px;
-  color: rgba(0,0,0,0.74)
 }
 
 textarea[disabled]{

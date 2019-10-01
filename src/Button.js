@@ -1,5 +1,5 @@
 import React from 'react';
-import './form.css';
+import './button.css';
 
 const Button = ({ label, disabled, ...props }) => (
   <button {...props} disabled={disabled} className={`button ${disabled ? 'button-disabled' : ''}`} >{label}</button>

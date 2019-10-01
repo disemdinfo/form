@@ -112,10 +112,7 @@ class Form extends Component {
       <div className="container" style={{ width, ...style }} {...props}>
         <div className="form">
           {children}
-        </div>
-        <div className="actions">          
-          {actions.filter(a => a.hide !== true).map(({ id, ...actionProps }) => <Button {...actionProps} key={id} />)}          
-        </div>
+        </div>      
       </div>
     );
   }

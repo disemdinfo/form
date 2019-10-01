@@ -3,30 +3,8 @@
     margin-right: auto;   
 }
 
-.form{    
-    /* display: flex;
-    flex-wrap: wrap; */
+.form{
     width: '100%'
-}
-
-.actions {
-    margin-top: 24px
-}
-
-.button{
-    background-color: transparent;
-    border: 1px solid #ccc;    
-    border-radius: 4px;
-    padding: 8px 16px;
-    cursor: pointer;
-    min-width: 80px;
-    margin-left: 4px;
-    margin-right: 4px;
-}
-
-.button-disabled{
-    background-color: #ccc;  
-    cursor: auto !important;    
 }
 
 .message {  
@@ -46,10 +24,10 @@
     padding-top: 2px;
   }
   
-  .error {
+.error {
     color: darkred;  
   }
   
-  .info {
+.info {
     color: rgba(0,0,0,0.74);  
   }
