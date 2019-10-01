@@ -41,8 +41,8 @@ function isValidForm() {
   return !document.getElementsByClassName('input-error').length;
 }
 
-const Input = ({ children, id, error, info, inputStyle, inputWidth, submited, ...props }) => (
-  <div error={error} style={{ width: inputWidth || '100%', ...inputStyle }} className={`input-container ${error ? 'input-error' : ''}`} >               
+const Input = ({ children, id, error, info, inputStyle, submited, ...props }) => (
+  <div error={error} style={inputStyle} className={`input-container ${error ? 'input-error' : ''}`} >               
     {children}          
     <div className="footer">
       {submited && <small className="error">{error}</small>}
@@ -136,9 +136,7 @@ Form.defaultProps = {
   style: {},
   isValid: () => false,  
   inputStyle: {
-    // marginBottom: 16,
-    // paddingRight: 4,
-    // paddingLeft: 4,
+    width: '100%',
   },
 };
 
