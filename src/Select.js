@@ -21,7 +21,8 @@ class InputSelect extends PureComponent {
       <ComponentContainer label={label}>
         <Select
           {...inputProps}
-          value={(isMulti ? options.filter(o => value.includes(o.value)) : options.find(o => o.value === value)) || ''}
+          closeMenuOnSelect={!isMulti}
+          value={(isMulti ? options.filter(o => (Array.isArray(value) ? value : [value]).includes(o.value)) : options.find(o => o.value === value)) || ''}
           options={options}
           ignoreAccents
           isMulti={isMulti}

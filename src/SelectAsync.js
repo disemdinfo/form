@@ -54,6 +54,7 @@ class SelectAsync extends PureComponent {
       <ComponentContainer label={label}>
         <Select
           {...inputProps}
+          closeMenuOnSelect={!isMulti}
           loadOptions={this.promiseOptions}
           value={this.state.value || ''}
           cacheOptions
