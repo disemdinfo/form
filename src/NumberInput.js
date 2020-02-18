@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CurrencyInput from 'react-currency-input';
 import ComponentContainer from './ComponentContainer';
 
-const NumberInput = ({ label, onChange, value, prefix, suffix, ...inputProps }) => (
+const NumberInput = ({ label, onChange, onBlur, value, prefix, suffix, ...inputProps }) => (
   <ComponentContainer label={label}>
     <CurrencyInput
       {...inputProps}
