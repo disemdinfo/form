@@ -11,6 +11,7 @@ const NumberInput = ({ label, onChange, value, prefix, suffix, ...inputProps }) 
       prefix={prefix}
       suffix={suffix}
       onChangeEvent={e => onChange({ e, id: e.target.id, value: Number(e.target.value.replace(/\./g, '').replace(',', '.').replace(prefix, '').replace(suffix, '')) })}
+      onBlur={e => onBlur({ e, id: e.target.id, value: Number(e.target.value.replace(/\./g, '').replace(',', '.').replace(prefix, '').replace(suffix, '')) })}
       className="input input-number"
     />
   </ComponentContainer>
