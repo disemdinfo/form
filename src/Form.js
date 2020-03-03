@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 import './form.css';
 
-export const msg = text => dispatch => dispatch({ type: 'SUCCESS', msg: text });
-
 function isObject(o) {
   return o && typeof o === 'object';
 }
@@ -124,8 +122,7 @@ Form.propTypes = {
   actions: PropTypes.array,
   width: PropTypes.string,
   style: PropTypes.object,
-  isValid: PropTypes.func,
-  msg: PropTypes.func.isRequired,
+  isValid: PropTypes.func,  
   inputStyle: PropTypes.object,
 };
 
@@ -140,7 +137,6 @@ Form.defaultProps = {
   },
 };
 
-// export default connect(() => {}, { msg })(Form);
 export default (Form);
 
 
