@@ -92,11 +92,12 @@ class Form extends Component {
     } else if (children.props.children) {
       return { ...children, props: { ...children.props, children: this.getInputs(children.props.children) } };
     } 
-
+	console.log('hideError',this.props.hideError)
     return (
       <Input
         {...children.props}       
         error={getError(children.props)}
+		hideError={this.props.hideError}
       >
         {children}
       </Input>);
