@@ -30,6 +30,7 @@ NumberInput.defaultProps = {
   prefix: undefined,
   suffix: undefined,
   onChange: () => console.log('onChange não definido'),
+  onBlur: () => null,
 };
 
 export default NumberInput;
