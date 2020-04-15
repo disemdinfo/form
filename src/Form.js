@@ -47,10 +47,10 @@ function isValidForm() {
 }
 
 
-const Input = ({ children, error, ...props }) => (
+const Input = ({ children, error, hideError, ...props }) => (
   <div error={error} className={`input-container ${error ? 'input-error' : ''}`} >               
     {children}
-	{error && <div className="input-message-error">{error}</div>}    
+	{error && !hideError && <div className="input-message-error">{error}</div>}    
   </div>
 );
 
