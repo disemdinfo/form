@@ -11,10 +11,10 @@ class TextInput extends Component {
   }
 
   render() {
-    const { label, maxLength, value, onChange, onBlur, style, ...props } = this.props;
-    const info = maxLength ? `${value.length} / ${maxLength}` : null;
+    const { label, maxLength, value, onChange, info, onBlur, style, ...props } = this.props;
+    // const info = maxLength ? `${value.length} / ${maxLength}` : null;
     return (
-      <ComponentContainer label={label}>
+      <ComponentContainer label={label} info={info}>
         <input
           {...props}
           value={value}
@@ -23,7 +23,7 @@ class TextInput extends Component {
           onBlur={e => onBlur({ e, id: e.target.id, value: e.target.value, error: error => this.setState({ error }) })}
           info={info}
           className="input"
-          style={{ width: '100%', ...style }}
+          // style={{ width: '100%', ...style }}
         />
       </ComponentContainer>);
   }

@@ -7,45 +7,51 @@ import './form.css';
 function isObject(o) {
   return o && typeof o === 'object';
 }
+
 function isArray(a) {
   return a && Array.isArray(a);
 }
+
 function getError(props) {
   if (props) {
-    const { id, value, error, required, min, max, minlength, maxlength } = props;
-    if (id) {
-      if (required && value !== 0) {
-        const text = 'Campo obrigatório.';
-        if (Array.isArray(value)) {
-          if (!value.length) return text;
-        } else if (!value) return text;
-      }
+    const { value, error, required, min, max, minlength, maxlength } = props;
+ 
+  if (required) {
+	const text = 'Campo obrigatório.';
 
-      if (min && value < min) return `Mínimo ${min}.`;
-      if (minlength && value && value.length < minlength) return `Mínimo de ${minlength} caracteres.`;
+	if (Array.isArray(value)) {
+	  if (!value.length) return text;
+	} else if(typeof value === 'number'){
+	  if (!value && value !== 0) return text;
+	} else if(typeof value === 'boolean'){
+		if(!value && value !== false)  return text;
+	} else if (!value) return text;
+  }
 
-      if (max && value > max) return `Máximo ${max}.`;
-      if (maxlength && value && value.length > maxlength) return `Máximo de ${maxlength} caracteres.`;
+  if (min && value < min) return `Mínimo ${min}.`;
+  if (minlength && value && value.length < minlength) return `Mínimo de ${minlength} caracteres.`;
 
-      if (error) {
-        return typeof error === 'function' ? error() : error;
-      }
-    }
+  if (max && value > max) return `Máximo ${max}.`;
+  if (maxlength && value && value.length > maxlength) return `Máximo de ${maxlength} caracteres.`;
+
+  if (error) {
+	return typeof error === 'function' ? error() : error;
+  }
+
   }
 
   return null;
 }
+
 function isValidForm() {
   return !document.getElementsByClassName('input-error').length;
 }
 
-const Input = ({ children, id, error, info, inputStyle, submited, ...props }) => (
-  <div error={error} style={inputStyle} className={`input-container ${error ? 'input-error' : ''}`} >               
-    {children}          
-    <div className="footer">
-      {submited && <small className="error">{error}</small>}
-      <small className="info">{info}</small>
-    </div>
+
+const Input = ({ children, error, ...props }) => (
+  <div error={error} className={`input-container ${error ? 'input-error' : ''}`} >               
+    {children}
+	{error && <div className="input-message-error">{error}</div>}    
   </div>
 );
 
@@ -54,8 +60,7 @@ class Form extends Component {
     super(props);
 
     this.state = {
-      isValid: false,
-      // submited: false,      
+      isValid: false,    
     };
 
     this.state.children = this.getInputs(props.children);    
@@ -65,9 +70,8 @@ class Form extends Component {
     this.props.isValid(isValidForm());
   }
 
-  componentWillReceiveProps({ children, submited }) {
-    if (children !== this.props.children) this.setInputs(children);    
-    if(submited !== this.props.submited) this.setState({ submited }, () => this.setInputs(children));
+  componentWillReceiveProps({ children }) {
+    if (children !== this.props.children) this.setInputs(children);
   }
 
   setInputs(children){
@@ -88,29 +92,22 @@ class Form extends Component {
       return null;
     } else if (children.props.children) {
       return { ...children, props: { ...children.props, children: this.getInputs(children.props.children) } };
-    } else if (!children.props.id) {
-      return children;
-    }
+    } 
 
     return (
       <Input
-        {...children.props}
-        inputStyle={this.props.inputStyle}        
+        {...children.props}       
         error={getError(children.props)}
-        submited={this.state.submited}
       >
         {children}
       </Input>);
   }
 
   render() {
-    const { actions, onSubmit, width, style, ...props } = this.props;
     const { children, isValid } = this.state;    
     return (
-      <div className="container" style={{ width, ...style }} {...props}>
-        <div className="form">
-          {children}
-        </div>      
+      <div className="form">
+          {children}       
       </div>
     );
   }
@@ -118,23 +115,11 @@ class Form extends Component {
 
 Form.propTypes = {
   children: PropTypes.node.isRequired,
-  onSubmit: PropTypes.func,
-  actions: PropTypes.array,
-  width: PropTypes.string,
-  style: PropTypes.object,
-  isValid: PropTypes.func,  
-  inputStyle: PropTypes.object,
+  isValid: PropTypes.func.isRequired,  
 };
 
 Form.defaultProps = {
-  onSubmit: null,
-  actions: [],
-  width: '100%',
-  style: {},
-  isValid: () => false,  
-  inputStyle: {
-    width: '100%',
-  },
+  isValid: () => false,
 };
 
 export default (Form);
