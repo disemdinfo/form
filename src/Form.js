@@ -48,7 +48,7 @@ function isValidForm() {
 
 
 const InputContainer = ({ children, error, hideError, ...props }) => (
-  <div error={error} className={'input-container' + error ? ' input-error' : ''} >               
+  <div error={error} className={`input-container ${error ? 'input-error' : ''}`} >               
     {children}
 	{error && !hideError && <div className="input-message-error">{error}</div>}    
   </div>
@@ -90,11 +90,11 @@ class Form extends Component {
       return children.map(c => this.getInputs(c));
     } else if (children.props.hide) {
       return null;
-    } else if (children.props.children) {
-      return { ...children, props: { ...children.props, children: this.getInputs(children.props.children) } };
     } else if(['input','textarea','select'].includes(children.type) || (typeof children.type === 'function')){	
 	  return (<InputContainer {...children.props} error={getError(children.props)} hideError={this.props.hideError}>{children}</InputContainer>);
-	} else {
+	} else if (children.props.children) {
+      return { ...children, props: { ...children.props, children: this.getInputs(children.props.children) } };
+    } else  {
 	  return children;	
 	}	
   }
