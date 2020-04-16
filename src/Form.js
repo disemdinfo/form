@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -92,11 +93,13 @@ class Form extends Component {
       return children.map(c => this.getInputs(c));
     } else if (children.props.hide) {
       return null;
-    } else if(['input','textarea','select'].includes(children.type) || (typeof children.type === 'function')){	
+    } else if(['input','textarea','select'].includes(children.type)){	
 	  return (<InputContainer {...children.props} error={getError(children.props)} hideError={this.state.hideError}>{children}</InputContainer>);
 	} else if (children.props.children) {
       return { ...children, props: { ...children.props, children: this.getInputs(children.props.children) } };
-    } else  {
+    } else if(typeof children.type === 'function'){ 
+	  return (<InputContainer {...children.props} error={getError(children.props)} hideError={this.state.hideError}>{children}</InputContainer>);
+	} else {
 	  return children;	
 	}	
   }
