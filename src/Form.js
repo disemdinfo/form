@@ -47,8 +47,8 @@ function isValidForm() {
 }
 
 
-const Input = ({ children, error, hideError, ...props }) => (
-  <div error={error} className={`input-container ${error ? 'input-error' : ''}`} >               
+const InputContainer = ({ children, error, hideError, ...props }) => (
+  <div error={error} className={'input-container' + error ? ' input-error' : ''} >               
     {children}
 	{error && !hideError && <div className="input-message-error">{error}</div>}    
   </div>
@@ -83,7 +83,15 @@ class Form extends Component {
   }
 
   getInputs(children) {
-    if (!isObject(children)) {
+	  const props = {
+		  ...children.props,
+		  error: getError(children.props),
+		  hideError: this.props.hideError,
+	  }
+	  
+	if(['input','textarea','select'].includes(children.type) || (typeof children.type === 'function')){	
+	  return (<InputContainer {...props}>{children}</InputContainer>);
+	} else if (!isObject(children)) {
       return children;
     } else if (isArray(children)) {
       return children.map(c => this.getInputs(c));
@@ -91,25 +99,14 @@ class Form extends Component {
       return null;
     } else if (children.props.children) {
       return { ...children, props: { ...children.props, children: this.getInputs(children.props.children) } };
-    } 
-
-    return (
-      <Input
-        {...children.props}       
-        error={getError(children.props)}
-		hideError={this.props.hideError}
-      >
-        {children}
-      </Input>);
+    } else {
+	  console.log('children',children)
+	  return children;	
+	}	
   }
 
-  render() {
-    const { children, isValid } = this.state;    
-    return (
-      <div className="form">
-          {children}       
-      </div>
-    );
+  render() {  
+    return <div className="form">{this.state.children}</div>;
   }
 }
 
