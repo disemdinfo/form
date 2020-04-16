@@ -59,7 +59,8 @@ class Form extends Component {
     super(props);
 
     this.state = {
-      isValid: false,    
+      isValid: false,
+	  hideError: props.hideError,
     };
 
     this.state.children = this.getInputs(props.children);    
@@ -69,8 +70,9 @@ class Form extends Component {
     this.props.isValid(isValidForm());
   }
 
-  componentWillReceiveProps({ children }) {
+  componentWillReceiveProps({ children, hideError }) {
     if (children !== this.props.children) this.setInputs(children);
+	if(hideError !== this.props.hideError) this.setState({ hideError }, () => this.setInputs(children));
   }
 
   setInputs(children){
@@ -82,8 +84,8 @@ class Form extends Component {
     });
   }
 
-  getInputs(children) {	
-	  
+  getInputs(children) {
+
 	if (!isObject(children)) {
       return children;
     } else if (isArray(children)) {
@@ -91,7 +93,7 @@ class Form extends Component {
     } else if (children.props.hide) {
       return null;
     } else if(['input','textarea','select'].includes(children.type) || (typeof children.type === 'function')){	
-	  return (<InputContainer {...children.props} error={getError(children.props)} hideError={this.props.hideError}>{children}</InputContainer>);
+	  return (<InputContainer {...children.props} error={getError(children.props)} hideError={this.state.hideError}>{children}</InputContainer>);
 	} else if (children.props.children) {
       return { ...children, props: { ...children.props, children: this.getInputs(children.props.children) } };
     } else  {
