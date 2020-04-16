@@ -82,16 +82,9 @@ class Form extends Component {
     });
   }
 
-  getInputs(children) {
-	  const props = {
-		  ...children.props,
-		  error: getError(children.props),
-		  hideError: this.props.hideError,
-	  }
+  getInputs(children) {	
 	  
-	if(['input','textarea','select'].includes(children.type) || (typeof children.type === 'function')){	
-	  return (<InputContainer {...props}>{children}</InputContainer>);
-	} else if (!isObject(children)) {
+	if (!isObject(children)) {
       return children;
     } else if (isArray(children)) {
       return children.map(c => this.getInputs(c));
@@ -99,8 +92,9 @@ class Form extends Component {
       return null;
     } else if (children.props.children) {
       return { ...children, props: { ...children.props, children: this.getInputs(children.props.children) } };
-    } else {
-	  console.log('children',children)
+    } else if(['input','textarea','select'].includes(children.type) || (typeof children.type === 'function')){	
+	  return (<InputContainer {...children.props} error={getError(children.props)} hideError={this.props.hideError}>{children}</InputContainer>);
+	} else {
 	  return children;	
 	}	
   }
