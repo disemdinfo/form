@@ -4,7 +4,7 @@ import ComponentContainer from './ComponentContainer';
 // import './react-select.css';
 
 function convertOptions({ options, optionValue, optionLabel, labelRenderer }) {
-  return options.map(option => ({ value: option[optionValue], label: labelRenderer ? labelRenderer(option) : option[optionLabel] }));
+  return options.map(option => ({ ...option, value: option[optionValue], label: labelRenderer ? labelRenderer(option) : option[optionLabel] }));
 }
 
 class InputSelect extends PureComponent {
@@ -54,7 +54,7 @@ class InputSelect extends PureComponent {
             } else {
               nextValueFormatted = (v || {}).value;
             }
-
+			
             onChange({ ...v, id, value: nextValueFormatted, selected, diff });
           }}
         />

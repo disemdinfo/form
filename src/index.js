@@ -2,7 +2,7 @@ import Form from './Form';
 import DateInput from './inputs/DateInput';
 import NumberInput from './inputs/NumberInput';
 import Radio from './inputs/Radio';
-import Select from './inputs/Select';
+import Select from './inputs/Select_old';
 import SelectCheckbox from './inputs/SelectCheckbox';
 import SelectAsync from './inputs/SelectAsync';
 import Switch from './inputs/Switch';
