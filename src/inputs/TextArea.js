@@ -10,7 +10,7 @@ const TextArea = (props) => {
         {...inputProps}
         onChange={e => onChange({ e, id: e.target.id, value: e.target.value })}
         onBlur={e => onBlur({ e, id: e.target.id, value: e.target.value })}
-        className="input"
+        className="input input-textarea"
         value={value}
         style={{ width: '100%', ...style }}
       />

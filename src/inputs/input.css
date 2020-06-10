@@ -67,6 +67,10 @@
   margin-right: 10;
 }
 
+.input-textarea{
+  height: 72px;
+}
+
 textarea[disabled]{
   background: rgb(242, 242, 242);
   border-color: rgb(230, 230, 230);
