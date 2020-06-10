@@ -21,9 +21,9 @@ TextArea.defaultProps = {
   value: '',
   onBlur: () => null,
   rows: 3,
-  style: {
-    height: 'auto',
-  },
+  //style: {
+  //  height: 'auto',
+  //},
 };
 
 export default TextArea;
