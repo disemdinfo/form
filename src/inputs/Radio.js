@@ -1,5 +1,4 @@
 import React from 'react';
-import Label from './Label';
 import ComponentContainer from './ComponentContainer';
 
 function isJson(str) {
@@ -12,26 +11,11 @@ function isJson(str) {
   return true;
 }
 
-const styles = {
-  options: {
-    display: 'flex',
-    padding: 6,
-    fontSize: '1rem',
-    fontWeight: 400,
-    lineHeight: 1.5,
-    color: '#212529',
-  },
-  option: {
-    display: 'flex',
-    marginRight: 6,
-    alignItems: 'center'
-  },
-};
 const Radio = ({ id, value, label, options, onChange, ...props }) => (
   <ComponentContainer label={label}>
-    <div style={styles.options}>
+    <div className="input input-radio-container">
       {options.map(option => (
-        <label htmlFor={id} style={styles.option}>          
+        <label htmlFor={id} className="input-radio">          
           <input
             {...props}
             type="radio"
