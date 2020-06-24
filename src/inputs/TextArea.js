@@ -12,7 +12,6 @@ const TextArea = (props) => {
         onBlur={e => onBlur({ e, id: e.target.id, value: e.target.value })}
         className="input input-textarea"
         value={value}
-        style={{ width: '100%', ...style }}
       />
     </ComponentContainer>);
 };
@@ -21,9 +20,6 @@ TextArea.defaultProps = {
   value: '',
   onBlur: () => null,
   rows: 3,
-  //style: {
-  //  height: 'auto',
-  //},
 };
 
 export default TextArea;

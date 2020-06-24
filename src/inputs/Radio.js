@@ -13,7 +13,7 @@ function isJson(str) {
 
 const Radio = ({ id, value, label, options, onChange, ...props }) => (
   <ComponentContainer label={label}>
-    <div className="input input-radio-container">
+    <div className="input-radio-container">
       {options.map(option => (
         <label htmlFor={id} className="input-radio">          
           <input

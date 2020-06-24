@@ -18,7 +18,7 @@ const DateInput = ({ label, onChange, id, value, closeOnSelect, timeFormat, isVa
         return isValidDate(current) && isValidMin && isValidMax;
       }}
       onChange={date => onChange({ id, value: date })}
-      inputProps={{ className: 'input', ...inputProps }}
+      inputProps={{ className: 'input input-date', ...inputProps }}
     />
   </ComponentContainer>
 );

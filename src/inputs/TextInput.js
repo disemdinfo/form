@@ -22,8 +22,7 @@ class TextInput extends Component {
           onChange={e => onChange({ e, id: e.target.id, value: e.target.value })}
           onBlur={e => onBlur({ e, id: e.target.id, value: e.target.value, error: error => this.setState({ error }) })}
           info={info}
-          className="input"
-          // style={{ width: '100%', ...style }}
+          className="input input-text"
         />
       </ComponentContainer>);
   }
