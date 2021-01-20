@@ -40,7 +40,7 @@ class SelectAsync extends PureComponent {
     // if (inputValue) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(this.props.getOptions(inputValue, this.props.params));
+        resolve(this.props.isDisabled ? () => {} : this.props.getOptions(inputValue, this.props.params));
       }, 500);
     });
     // }
