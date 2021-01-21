@@ -4,9 +4,10 @@ import moment from 'moment';
 import 'react-datetime/css/react-datetime.css';
 import ComponentContainer from './ComponentContainer';
 
-const DateInput = ({ label, onChange, id, value, closeOnSelect, timeFormat, isValidDate, minDate, maxDate, ...inputProps }) => (
+const DateInput = ({ label, onChange, id, value, closeOnSelect, timeFormat, isValidDate, minDate, maxDate, inputProps, ...props }) => (
   <ComponentContainer label={label}>
     <Datetime
+      {...props}
       id={id}
       value={value ? moment(value).utc() : null}
       closeOnSelect={closeOnSelect}
@@ -20,6 +21,13 @@ const DateInput = ({ label, onChange, id, value, closeOnSelect, timeFormat, isVa
       onChange={date => onChange({ id, value: date })}
       inputProps={{ className: 'input input-date', ...inputProps }}
     />
+    {/* <input
+      {...props}
+      type="date"
+      id={id}
+      onChange={e => onChange({ id, value: e.target.value })}
+      className='input input-date'
+    /> */}
   </ComponentContainer>
 );
 
