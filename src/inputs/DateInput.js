@@ -19,6 +19,7 @@ const DateInput = ({ label, onChange, id, value, closeOnSelect, timeFormat, isVa
       }}
       onChange={date => onChange({ id, value: date })}
       inputProps={{ className: 'input input-date', ...inputProps }}
+      locale="pt-br"
     />
   </ComponentContainer>
 );
